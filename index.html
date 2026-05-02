@@ -437,6 +437,27 @@
     line-height: 1.6;
   }
 
+
+  /* ─── INTRO CARDS (scale descriptions) ─── */
+  .intro-card {
+    background: linear-gradient(135deg, #f0f4ff 0%, #f7f5f0 100%);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-bottom: 20px;
+  }
+  .intro-card .intro-emoji { font-size: 1.5rem; margin-bottom: 8px; display: block; }
+  .intro-card p { font-size: 0.88rem; color: #444; line-height: 1.65; margin-bottom: 6px; }
+  .intro-card p:last-child { margin-bottom: 0; }
+  .intro-card .intro-cta {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.03em;
+  }
   /* ─── VALIDATION ─── */
   .error-msg { color: var(--accent2); font-size: 0.8rem; margin-top: 6px; }
 
@@ -487,7 +508,7 @@
         <div class="ic-label">anos de idade</div>
       </div>
       <div class="info-card">
-        <div class="ic-num">6</div>
+        <div class="ic-num">7</div>
         <div class="ic-label">escalas com feedback</div>
       </div>
     </div>
@@ -509,7 +530,7 @@
       <p><strong>Riscos:</strong> Mínimos — possível leve desconforto emocional ao responder questões sobre ansiedade ou experiências pessoais.</p>
       <p><strong>Dados:</strong> Sem identificação. Armazenados em ambiente seguro. Tratados conforme a LGPD (Lei nº 13.709/2018). Resultados divulgados apenas de forma coletiva e agregada.</p>
       <p><strong>Contato:</strong> rodrigo.perissinotto@docente.unip.br | CEP-UNIP: cep@unip.br</p>
-      <p>O TCLE completo está disponível em: <em>Apêndice 1 do protocolo de pesquisa</em>.</p>
+      <p>O TCLE completo está disponível em: <a href="https://unipead-my.sharepoint.com/personal/rodrigo_perissinotto_docente_unip_br/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Frodrigo%5Fperissinotto%5Fdocente%5Funip%5Fbr%2FDocuments%2FPESQUISA%2FTCLE%20%2D%20Completo%2Epdf&parent=%2Fpersonal%2Frodrigo%5Fperissinotto%5Fdocente%5Funip%5Fbr%2FDocuments%2FPESQUISA&ga=1" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600">TCLE.pdf ↗</a></p>
     </div>
 
     <div class="field-group">
@@ -675,8 +696,13 @@
   <!-- ══════════════ SCREEN 4: TRUE CRIME ══════════════ -->
   <div class="screen" id="screen-4">
     <div class="section-header">
-      <span class="section-badge">Parte 3 de 9</span>
+      <span class="section-badge">Parte 3 de 10</span>
       <h2>Consumo de True Crime</h2>
+    </div>
+    <div class="intro-card">
+      <span class="intro-emoji">🎙️</span>
+      <p>True crime é o nome dado a documentários, séries, podcasts, vídeos e livros baseados em crimes reais e investigações criminais. Nesta etapa, buscamos compreender com que frequência e intensidade esse tipo de conteúdo faz parte do seu cotidiano.</p>
+      <span class="intro-cta">✓ Suas respostas ajudarão a compor seu perfil psicológico ao final.</span>
     </div>
 
     <div class="field-group">
@@ -741,10 +767,16 @@
   <!-- ══════════════ SCREEN 5: TÉTRADE SOMBRIA ══════════════ -->
   <div class="screen" id="screen-5">
     <div class="section-header">
-      <span class="section-badge">Parte 4 de 9 · Escala</span>
+      <span class="section-badge">Parte 4 de 10 · Escala</span>
       <h2>Tétrade Sombria</h2>
-      <p>Indique o quanto você concorda ou discorda de cada afirmação (1 = Discordo totalmente · 5 = Concordo totalmente).</p>
     </div>
+    <div class="intro-card">
+      <span class="intro-emoji">🌓</span>
+      <p>Esta escala investiga traços de personalidade ligados a estilos mais estratégicos de relação interpessoal, autopromoção, impulsividade e frieza emocional.</p>
+      <p>Esses traços não indicam, necessariamente, qualquer problema psicológico ou moral — eles fazem parte de características humanas que aparecem em diferentes intensidades em todos os perfis de personalidade.</p>
+      <span class="intro-cta">✓ Ao final, você verá como esses traços se distribuem no seu perfil.</span>
+    </div>
+    <p style="font-size:0.88rem;color:var(--mid);margin-bottom:16px;">Indique o quanto você concorda ou discorda de cada afirmação (1 = Discordo totalmente · 5 = Concordo totalmente).</p>
     <div id="tetrade-items"></div>
     <div class="btn-nav">
       <button class="btn btn-secondary" onclick="goTo(4)">← Voltar</button>
@@ -755,10 +787,15 @@
   <!-- ══════════════ SCREEN 6: ECOGA ══════════════ -->
   <div class="screen" id="screen-6">
     <div class="section-header">
-      <span class="section-badge">Parte 5 de 9 · Escala</span>
+      <span class="section-badge">Parte 5 de 10 · Escala</span>
       <h2>Escala Cognitiva de Ansiedade (ECOGA)</h2>
-      <p>Indique o quanto você concorda com cada afirmação (1 = Discordo totalmente · 5 = Concordo totalmente).</p>
     </div>
+    <div class="intro-card">
+      <span class="intro-emoji">🧠</span>
+      <p>Esta escala avalia a frequência com que pensamentos de preocupação, antecipação negativa e ruminação mental aparecem no cotidiano. Ela não corresponde a um diagnóstico, mas a uma medida de como a mente pode reagir diante de pressões e incertezas.</p>
+      <span class="intro-cta">✓ Ao concluir, você receberá uma análise personalizada dos seus resultados.</span>
+    </div>
+    <p style="font-size:0.88rem;color:var(--mid);margin-bottom:16px;">Indique o quanto você concorda com cada afirmação (1 = Discordo totalmente · 5 = Concordo totalmente).</p>
     <div id="ecoga-items"></div>
     <div class="btn-nav">
       <button class="btn btn-secondary" onclick="goTo(5)">← Voltar</button>
@@ -769,10 +806,15 @@
   <!-- ══════════════ SCREEN 7: EPS-10 ══════════════ -->
   <div class="screen" id="screen-7">
     <div class="section-header">
-      <span class="section-badge">Parte 6 de 9 · Escala</span>
+      <span class="section-badge">Parte 6 de 10 · Escala</span>
       <h2>Percepção de Estresse (EPS-10)</h2>
-      <p>Considere os <strong>últimos 30 dias</strong>. (0 = Nunca · 4 = Muito frequente)</p>
     </div>
+    <div class="intro-card">
+      <span class="intro-emoji">⚡</span>
+      <p>O estresse está relacionado tanto às demandas vividas quanto à sensação de capacidade para administrá-las. Esta etapa avalia sua percepção de sobrecarga e seus recursos de enfrentamento no cotidiano. Não se trata de medir fraqueza, mas de compreender o equilíbrio entre exigências externas e recursos internos.</p>
+      <span class="intro-cta">✓ Ao final, você visualizará seu perfil de estresse e manejo psicológico.</span>
+    </div>
+    <p style="font-size:0.88rem;color:var(--mid);margin-bottom:16px;">Considere os <strong>últimos 30 dias</strong>. (0 = Nunca · 4 = Muito frequente)</p>
     <div id="eps-items"></div>
     <div class="btn-nav">
       <button class="btn btn-secondary" onclick="goTo(6)">← Voltar</button>
@@ -783,10 +825,15 @@
   <!-- ══════════════ SCREEN 8: ROSENBERG ══════════════ -->
   <div class="screen" id="screen-8">
     <div class="section-header">
-      <span class="section-badge">Parte 7 de 9 · Escala</span>
+      <span class="section-badge">Parte 7 de 10 · Escala</span>
       <h2>Autoestima de Rosenberg</h2>
-      <p>Indique o quanto você concorda com cada afirmação (1 = Discordo totalmente · 4 = Concordo totalmente).</p>
     </div>
+    <div class="intro-card">
+      <span class="intro-emoji">💠</span>
+      <p>A autoestima envolve a forma como você se percebe e se valoriza de modo geral. Esta escala investiga sua avaliação global sobre si mesmo(a) — não se trata de medir perfeição, mas de compreender como cada pessoa se relaciona consigo.</p>
+      <span class="intro-cta">✓ Seus resultados mostrarão seu nível atual de autoestima percebida.</span>
+    </div>
+    <p style="font-size:0.88rem;color:var(--mid);margin-bottom:16px;">Indique o quanto você concorda com cada afirmação (1 = Discordo totalmente · 4 = Concordo totalmente).</p>
     <div id="rosenberg-items"></div>
     <div class="btn-nav">
       <button class="btn btn-secondary" onclick="goTo(7)">← Voltar</button>
@@ -797,10 +844,15 @@
   <!-- ══════════════ SCREEN 9: AUTOEFICÁCIA ══════════════ -->
   <div class="screen" id="screen-9">
     <div class="section-header">
-      <span class="section-badge">Parte 8 de 9 · Escala</span>
+      <span class="section-badge">Parte 8 de 10 · Escala</span>
       <h2>Autoeficácia para Situações de Vitimização</h2>
-      <p>Indique o quanto você concorda (1 = Discordo totalmente · 5 = Concordo totalmente).</p>
     </div>
+    <div class="intro-card">
+      <span class="intro-emoji">🛡️</span>
+      <p>Esta escala avalia sua percepção de confiança para agir, buscar soluções e tomar decisões diante de situações adversas ou de ameaça. Ela não pretende responsabilizar ninguém por eventos violentos, mas compreender a percepção subjetiva de recursos de enfrentamento.</p>
+      <span class="intro-cta">✓ Ao final, você terá acesso ao seu perfil de autoeficácia para enfrentamento.</span>
+    </div>
+    <p style="font-size:0.88rem;color:var(--mid);margin-bottom:16px;">Indique o quanto você concorda (1 = Discordo totalmente · 5 = Concordo totalmente).</p>
     <div id="autoeficacia-items"></div>
     <div class="btn-nav">
       <button class="btn btn-secondary" onclick="goTo(8)">← Voltar</button>
@@ -811,19 +863,89 @@
   <!-- ══════════════ SCREEN 10: ESV ══════════════ -->
   <div class="screen" id="screen-10">
     <div class="section-header">
-      <span class="section-badge">Parte 9 de 9 · Escala</span>
+      <span class="section-badge">Parte 9 de 10 · Escala</span>
       <h2>Satisfação com a Vida (ESV)</h2>
-      <p>Indique o quanto você concorda com cada afirmação (1 = Discordo plenamente · 7 = Concordo plenamente).</p>
     </div>
+    <div class="intro-card">
+      <span class="intro-emoji">🌿</span>
+      <p>Esta escala avalia sua percepção global sobre a própria vida — sensação de realização, contentamento e avaliação da trajetória pessoal. Não existe resposta certa ou errada: o que importa é como você genuinamente se sente.</p>
+      <span class="intro-cta">✓ Quase lá! Uma última etapa e você verá seu feedback completo.</span>
+    </div>
+    <p style="font-size:0.88rem;color:var(--mid);margin-bottom:16px;">Indique o quanto você concorda com cada afirmação (1 = Discordo plenamente · 7 = Concordo plenamente).</p>
     <div id="esv-items"></div>
     <div class="btn-nav">
       <button class="btn btn-secondary" onclick="goTo(9)">← Voltar</button>
+      <button class="btn btn-primary" onclick="goTo(11)">Continuar →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════ SCREEN 11: IPAQ ══════════════ -->
+  <div class="screen" id="screen-11">
+    <div class="section-header">
+      <span class="section-badge">Parte 10 de 10 · Escala</span>
+      <h2>Atividade Física (IPAQ)</h2>
+    </div>
+    <div class="intro-card">
+      <span class="intro-emoji">🏃</span>
+      <p>A prática de atividade física está diretamente relacionada à saúde física, regulação emocional e qualidade de vida. Esta é a última etapa — responda considerando o que você realizou na <strong>última semana</strong>.</p>
+      <span class="intro-cta">✓ Ao concluir, você verá seu perfil completo com feedback de todas as escalas.</span>
+    </div>
+    <p style="font-size:0.85rem;color:var(--mid);margin-bottom:20px;">As perguntas incluem atividades no trabalho, deslocamento, lazer, esporte ou tarefas domésticas. Responda cada questão mesmo que considere que não seja ativo(a). Use <strong>0 (zero)</strong> se não realizou a atividade.</p>
+
+    <div class="field-group">
+      <label class="field-label">Em quantos dias da última semana você <strong>caminhou</strong> por pelo menos 10 minutos contínuos? <span class="required">*</span></label>
+      <input type="number" id="ipaq_cam_dias" min="0" max="7" placeholder="0 a 7 dias"/>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Nos dias em que caminhou, quanto tempo no total você gastou caminhando por dia? <span class="required">*</span></label>
+      <input type="number" id="ipaq_cam_min" min="0" placeholder="Minutos por dia"/>
+    </div>
+
+    <hr class="divider"/>
+
+    <div class="field-group">
+      <label class="field-label">Em quantos dias da última semana você realizou atividades <strong>moderadas</strong> por pelo menos 10 minutos contínuos? <span class="required">*</span></label>
+      <p style="font-size:0.8rem;color:var(--mid);margin:-4px 0 8px">Ex.: pedalar levemente, nadar, dançar, ginástica aeróbica leve, vôlei recreativo, serviços domésticos. <em>Não inclua caminhada.</em></p>
+      <input type="number" id="ipaq_mod_dias" min="0" max="7" placeholder="0 a 7 dias"/>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Nos dias em que fez atividades moderadas, quanto tempo no total por dia? <span class="required">*</span></label>
+      <input type="number" id="ipaq_mod_min" min="0" placeholder="Minutos por dia"/>
+    </div>
+
+    <hr class="divider"/>
+
+    <div class="field-group">
+      <label class="field-label">Em quantos dias da última semana você realizou atividades <strong>vigorosas</strong> por pelo menos 10 minutos contínuos? <span class="required">*</span></label>
+      <p style="font-size:0.8rem;color:var(--mid);margin:-4px 0 8px">Ex.: correr, ginástica aeróbica intensa, futebol, pedalar rápido, basquete, serviços domésticos pesados, carregar pesos elevados.</p>
+      <input type="number" id="ipaq_vig_dias" min="0" max="7" placeholder="0 a 7 dias"/>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Nos dias em que fez atividades vigorosas, quanto tempo no total por dia? <span class="required">*</span></label>
+      <input type="number" id="ipaq_vig_min" min="0" placeholder="Minutos por dia"/>
+    </div>
+
+    <hr class="divider"/>
+
+    <p style="font-size:0.88rem;color:var(--mid);margin-bottom:14px;">As últimas perguntas são sobre o tempo que você permanece <strong>sentado(a)</strong> durante o dia (no trabalho, em casa, no lazer). Não inclua o tempo sentado(a) no transporte.</p>
+
+    <div class="field-group">
+      <label class="field-label">Quanto tempo, em horas, você gasta sentado(a) durante um <strong>dia de semana</strong>? <span class="required">*</span></label>
+      <input type="number" id="ipaq_sent_semana" min="0" max="24" placeholder="Horas"/>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Quanto tempo, em horas, você gasta sentado(a) durante um <strong>dia de final de semana</strong>? <span class="required">*</span></label>
+      <input type="number" id="ipaq_sent_fds" min="0" max="24" placeholder="Horas"/>
+    </div>
+
+    <div class="btn-nav">
+      <button class="btn btn-secondary" onclick="goTo(10)">← Voltar</button>
       <button class="btn btn-primary" onclick="finishSurvey()">Ver meus resultados →</button>
     </div>
   </div>
 
-  <!-- ══════════════ SCREEN 11: FEEDBACK ══════════════ -->
-  <div class="screen" id="screen-11">
+  <!-- ══════════════ SCREEN 12: FEEDBACK ══════════════ -->
+  <div class="screen" id="screen-12">
     <div class="feedback-header">
       <div class="check-circle">✓</div>
       <h2>Obrigado pela participação!</h2>
@@ -831,31 +953,17 @@
     </div>
 
     <div class="disclaimer-box">
-      ⚠️ <strong>Importante:</strong> Este feedback é educacional e não constitui diagnóstico clínico. Os resultados refletem tendências populacionais gerais. Caso sinta necessidade de apoio, procure um profissional de saúde mental.
+      ⚠️ <strong>Importante:</strong> Este feedback é educacional e não constitui diagnóstico clínico. Os resultados refletem tendências populacionais gerais. Caso sinta necessidade de apoio, procure um profissional de saúde mental ou entre em contato com o pesquisador Dr. Rodrigo Perissinotto: (62) 98308-4213.
     </div>
 
     <hr class="divider"/>
 
     <div id="feedback-content"></div>
 
-    <div class="db-export-area">
-      <h3>📊 Banco de Dados</h3>
-      <p>Exporte os dados coletados neste dispositivo para análise estatística.</p>
-      <div class="export-btns">
-        <button class="btn-export" onclick="exportCSV()">⬇ Exportar CSV</button>
-        <button class="btn-export" onclick="exportJSON()">⬇ Exportar JSON</button>
-        <button class="btn-export" onclick="viewDB()">📋 Ver banco</button>
-        <button class="btn-export" onclick="clearDB()">🗑 Limpar dados</button>
-      </div>
-    </div>
-
-    <div style="text-align:center; margin-top:28px;">
-      <button class="btn btn-primary" style="max-width:300px" onclick="newResponse()">Registrar nova resposta</button>
-    </div>
   </div>
 
-  <!-- ══════════════ SCREEN 12: VIEWER BD ══════════════ -->
-  <div class="screen" id="screen-12">
+  <!-- ══════════════ SCREEN 13: VIEWER BD ══════════════ -->
+  <div class="screen" id="screen-13">
     <div class="section-header">
       <span class="section-badge">Banco de Dados</span>
       <h2>Respostas Registradas</h2>
@@ -1035,7 +1143,7 @@ const DB_KEY = 'tetrade_db';
 // ════════════════════════════════════════════════
 //  NAVIGATION
 // ════════════════════════════════════════════════
-const TOTAL_SCREENS = 13;
+const TOTAL_SCREENS = 14;
 
 function goTo(n) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -1232,12 +1340,60 @@ function classifyECOGA(score) {
   return { level: 'Ansiedade cognitiva baixa', css: 'nivel-baixo', desc: 'Você apresenta poucos padrões cognitivos de ansiedade. Tende a avaliar situações de forma mais equilibrada e confia em sua capacidade de lidar com problemas.' };
 }
 
-function classifyAutoeficacia(score) {
-  // Max 85 (itens negativos invertidos)
-  const pct = score / 85;
-  if (pct >= 0.70) return { level: 'Alta autoeficácia', css: 'nivel-baixo', desc: 'Você demonstra forte crença na sua capacidade de lidar com situações de violência e ameaça. Sente-se confiante para encontrar soluções e buscar ajuda quando necessário.' };
-  if (pct >= 0.45) return { level: 'Autoeficácia moderada', css: 'nivel-medio', desc: 'Você possui uma crença moderada em sua capacidade de proteção. Em algumas situações sente-se confiante; em outras, pode perceber mais dificuldade. O desenvolvimento de habilidades de enfrentamento pode fortalecer essa percepção.' };
-  return { level: 'Autoeficácia reduzida', css: 'nivel-alto', desc: 'Você apresenta baixa percepção de autoeficácia para situações de violência e ameaça. Isso pode estar associado a maior sensação de vulnerabilidade. Estratégias de fortalecimento pessoal e redes de apoio são importantes nesse contexto.' };
+// ── EAREV — Autoeficácia frente à Vitimização (algoritmo oficial) ──
+function calcularEAREV() {
+  const r = responses['autoeficacia'] || {};
+  const b = [0.27,-0.31,-1.18,-0.51,0.15,0.60,1.00,0.28,0.45,-0.24,-0.83,-0.45,0.16,0.45,0.18];
+  // usa apenas os 15 primeiros itens conforme o script fornecido
+  let numerador = 0, denominador = 0;
+  for (let i = 0; i < 15; i++) {
+    const v = r[i] !== undefined ? parseInt(r[i]) : 3; // neutro se não respondido
+    numerador += v * b[i];
+    denominador += Math.abs(b[i]);
+  }
+  const theta = +(numerador / denominador).toFixed(2);
+  let faixa, css, feedback;
+  if (theta < 0.80) {
+    faixa = 'Baixa Autoeficácia frente à Vitimização'; css = 'nivel-alto';
+    feedback = 'Suas respostas sugerem menor percepção de confiança em recursos pessoais de proteção, enfrentamento e tomada de decisão diante de situações potencialmente violentas.';
+  } else if (theta < 1.80) {
+    faixa = 'Autoeficácia Moderada frente à Vitimização'; css = 'nivel-medio';
+    feedback = 'Suas respostas sugerem percepção intermediária de capacidade para lidar com situações de vitimização, com presença de alguns recursos pessoais, embora ainda existam zonas de insegurança em situações inesperadas.';
+  } else {
+    faixa = 'Alta Autoeficácia frente à Vitimização'; css = 'nivel-baixo';
+    feedback = 'Suas respostas sugerem percepção fortalecida de capacidade para lidar com situações de vitimização, com confiança consistente em estratégias de autoproteção, busca de soluções e manejo de adversidades.';
+  }
+  return { theta, faixa, css, feedback };
+}
+
+// ── EPS-10 — cálculo bifatorial com z-scores (algoritmo oficial) ──
+function calcularEPS10() {
+  const r = responses['eps'] || {};
+  const v = i => r[i] !== undefined ? parseInt(r[i]) : 2; // neutro se não respondido
+
+  const F1 = (0.740*v(0)) + (0.549*v(1)) + (0.802*v(2)) + (0.669*v(5)) + (0.719*v(8)) + (0.610*v(9));
+  const F2 = (0.601*v(3)) + (0.868*v(4)) + (0.530*v(6)) + (0.712*v(7));
+
+  const zEstresse = +((F1 - 14.79) / 3.27).toFixed(2);
+  const zAuto     = +((F2 -  9.01) / 2.07).toFixed(2);
+
+  const faixaEstresse = zEstresse < -0.5 ? 'Baixo Estresse' : zEstresse <= 0.5 ? 'Estresse Moderado' : 'Alto Estresse';
+  const faixaAuto     = zAuto     < -0.5 ? 'Baixa Autoeficácia de Manejo' : zAuto <= 0.5 ? 'Autoeficácia Moderada de Manejo' : 'Alta Autoeficácia de Manejo';
+
+  const cssEstresse = faixaEstresse === 'Alto Estresse' ? 'nivel-alto' : faixaEstresse === 'Estresse Moderado' ? 'nivel-medio' : 'nivel-baixo';
+  const cssAuto     = faixaAuto === 'Baixa Autoeficácia de Manejo' ? 'nivel-alto' : faixaAuto === 'Autoeficácia Moderada de Manejo' ? 'nivel-medio' : 'nivel-baixo';
+
+  let feedback;
+  if (faixaEstresse === 'Alto Estresse' && faixaAuto === 'Baixa Autoeficácia de Manejo') {
+    feedback = 'Você apresenta elevada percepção de sobrecarga associada a reduzida confiança em recursos pessoais de manejo, sugerindo maior vulnerabilidade ao desgaste emocional.';
+  } else if (faixaEstresse === 'Alto Estresse') {
+    feedback = 'Você percebe alto nível de exigências e tensão no cotidiano, porém mantém recursos psicológicos relativamente preservados para enfrentamento.';
+  } else if (faixaAuto === 'Baixa Autoeficácia de Manejo') {
+    feedback = 'Embora a percepção global de estresse não seja extrema, há menor confiança subjetiva na própria capacidade de lidar com dificuldades, sugerindo fragilidade adaptativa.';
+  } else {
+    feedback = 'Seu perfil sugere equilíbrio adaptativo, com menor sobrecarga percebida e boa confiança em estratégias pessoais de manejo.';
+  }
+  return { F1: +F1.toFixed(2), F2: +F2.toFixed(2), zEstresse, zAuto, faixaEstresse, faixaAuto, cssEstresse, cssAuto, feedback };
 }
 
 function classifyESV(score) {
@@ -1247,36 +1403,131 @@ function classifyESV(score) {
   return { level: 'Baixa satisfação', css: 'nivel-alto', desc: 'Você avalia sua satisfação com a vida de forma mais crítica ou negativa. Isso pode refletir circunstâncias difíceis ou padrões cognitivos que merecem atenção e cuidado.' };
 }
 
+// SD4 — pontos de corte e mensagens conforme normas oficiais (Excel AC_SD4)
 function classifyTetradeTrait(score, max, traitName) {
-  const pct = score / max;
-  let level, css;
-  if (pct >= 0.65) { level = 'Elevado'; css = 'nivel-alto'; }
-  else if (pct >= 0.40) { level = 'Moderado'; css = 'nivel-medio'; }
-  else { level = 'Baixo'; css = 'nivel-baixo'; }
-
-  const descs = {
-    maquiavelismo: {
-      'Elevado': 'Você tende a utilizar estratégias de planejamento, discrição e manipulação social para atingir objetivos. Pessoas com alto maquiavelismo geralmente são calculistas nas relações interpessoais.',
-      'Moderado': 'Você demonstra alguma tendência a planejar estrategicamente nas relações sociais, sem que isso seja um padrão dominante.',
-      'Baixo': 'Você tende a ser mais direto e transparente nas relações. Prioriza honestidade em detrimento de estratégias interpessoais manipulativas.'
-    },
-    narcisismo: {
-      'Elevado': 'Você apresenta forte senso de grandiosidade, crença em habilidades especiais e desejo de atenção e admiração dos outros. Esse padrão pode gerar dificuldades nas relações de reciprocidade.',
-      'Moderado': 'Você demonstra alguma tendência à autoconfiança e busca de reconhecimento, dentro de um nível que ainda preserva consideração pelo outro.',
-      'Baixo': 'Você demonstra baixa tendência ao narcisismo. Tende a ser mais humilde e menos focado em obter admiração ou atenção social.'
-    },
-    psicopatia: {
-      'Elevado': 'Você apresenta tendência a impulsividade, desafio a regras e menor responsividade emocional diante de consequências. Esse traço está associado a maior propensão a comportamentos de risco.',
-      'Moderado': 'Você demonstra alguma tendência à busca de excitação e menor adesão a regras, mas sem que isso seja um padrão completamente dominante.',
-      'Baixo': 'Você tende a ser mais controlado, responsável e respeitoso às normas sociais. Demonstra baixa impulsividade e aversão a comportamentos de risco desnecessários.'
-    },
-    sadismo: {
-      'Elevado': 'Você apresenta tendência a encontrar prazer em situações ou narrativas de dor e sofrimento alheios. Esse traço pode estar relacionado a formas de agressão verbal e busca por conteúdos violentos.',
-      'Moderado': 'Você demonstra algum interesse em conteúdos ou situações de intensidade violenta, sem que isso seja um padrão predominante.',
-      'Baixo': 'Você apresenta baixa tendência ao sadismo. Demonstra pouco interesse em situações de dor ou humilhação alheias e rejeita comportamentos agressivos desnecessários.'
-    }
+  const normas = {
+    maquiavelismo: [
+      { max: 17,  level: 'Baixo',    css: 'nivel-baixo', desc: 'Você tende a ser direto e transparente, valorizando a sinceridade nas relações. Isso fortalece vínculos de confiança, embora possa dificultar em ambientes muito competitivos.' },
+      { max: 27,  level: 'Médio',    css: 'nivel-medio', desc: 'Você demonstra equilíbrio entre sinceridade e estratégia, conseguindo negociar e se posicionar sem recorrer excessivamente à manipulação.' },
+      { max: 999, level: 'Alto',     css: 'nivel-alto',  desc: 'Você tende a usar estratégias de influência para atingir objetivos. Isso pode ser útil em negociações e liderança, mas é importante refletir sobre como esse estilo impacta a confiança e as relações interpessoais.' },
+    ],
+    narcisismo: [
+      { max: 13,  level: 'Baixo',    css: 'nivel-baixo', desc: 'Você tende a ter uma postura modesta, podendo até apresentar insegurança em alguns momentos. Esse estilo favorece a humildade, mas pode limitar a autovalorização.' },
+      { max: 23,  level: 'Médio',    css: 'nivel-medio', desc: 'Você apresenta uma autoestima equilibrada, com busca saudável por reconhecimento e confiança em suas capacidades.' },
+      { max: 999, level: 'Alto',     css: 'nivel-alto',  desc: 'Você demonstra alta autoconfiança e desejo de destaque. Isso pode impulsionar conquistas, mas também merece atenção para lidar com críticas e valorizar as necessidades dos outros.' },
+    ],
+    psicopatia: [
+      { max: 8,   level: 'Baixo',    css: 'nivel-baixo', desc: 'Você valoriza a empatia, evita riscos excessivos e tende a respeitar normas sociais, favorecendo relações mais seguras e confiáveis.' },
+      { max: 19,  level: 'Médio',    css: 'nivel-medio', desc: 'Você equilibra assertividade e sensibilidade, conseguindo lidar com situações difíceis sem perder totalmente a preocupação ética.' },
+      { max: 999, level: 'Alto',     css: 'nivel-alto',  desc: 'Você demonstra maior impulsividade e tolerância ao risco. Isso pode favorecer decisões rápidas e firmes, mas também exige atenção ao controle emocional e às consequências das ações.' },
+    ],
+    sadismo: [
+      { max: 11,  level: 'Baixo',    css: 'nivel-baixo', desc: 'Você evita causar sofrimento ou desconforto e valoriza interações respeitosas, priorizando vínculos colaborativos.' },
+      { max: 23,  level: 'Médio',    css: 'nivel-medio', desc: 'Você consegue lidar com situações competitivas sem buscar prazer em prejudicar outras pessoas, equilibrando firmeza e respeito.' },
+      { max: 999, level: 'Alto',     css: 'nivel-alto',  desc: 'Você tende a se sentir fortalecido em contextos de confronto ou dominação. Esse estilo pode apoiar liderança firme, mas exige cautela para não gerar agressividade ou prejuízos a outros.' },
+    ],
+    geral: [
+      { max: 49,  level: 'Baixo',    css: 'nivel-baixo', desc: 'Seu perfil indica estilo interpessoal cooperativo e empático, voltado para a colaboração e o respeito mútuo.' },
+      { max: 92,  level: 'Médio',    css: 'nivel-medio', desc: 'Você apresenta traços estratégicos dentro de níveis típicos. Esse equilíbrio pode ser funcional em diferentes contextos sociais e profissionais.' },
+      { max: 999, level: 'Alto',     css: 'nivel-alto',  desc: 'Seu perfil sugere maior competitividade e pragmatismo, o que pode fortalecer a liderança em alguns ambientes. Ao mesmo tempo, requer atenção para manter a autorregulação e preservar a confiança nas relações.' },
+    ],
   };
-  return { level, css, desc: descs[traitName][level] };
+  const faixas = normas[traitName] || normas.geral;
+  const faixa = faixas.find(f => score <= f.max) || faixas[faixas.length - 1];
+  return { level: faixa.level, css: faixa.css, desc: faixa.desc };
+}
+
+// Escore fator geral SD4 (soma dos 28 itens)
+function scoreTetradeFatorGeral() {
+  const r = responses['tetrade'] || {};
+  let tot = 0, cnt = 0;
+  for (let i = 0; i < 28; i++) {
+    if (r[i] !== undefined) { tot += parseInt(r[i]); cnt++; }
+  }
+  return { score: tot, max: 140, answered: cnt };
+}
+
+
+// ── IPAQ — classificação conforme protocolo CELAFISCS/WHO ──
+function calcularIPAQ() {
+  const cd = parseFloat(document.getElementById('ipaq_cam_dias')?.value) || 0;
+  const cm = parseFloat(document.getElementById('ipaq_cam_min')?.value) || 0;
+  const md = parseFloat(document.getElementById('ipaq_mod_dias')?.value) || 0;
+  const mm = parseFloat(document.getElementById('ipaq_mod_min')?.value) || 0;
+  const vd = parseFloat(document.getElementById('ipaq_vig_dias')?.value) || 0;
+  const vm = parseFloat(document.getElementById('ipaq_vig_min')?.value) || 0;
+  const ss = parseFloat(document.getElementById('ipaq_sent_semana')?.value) || 0;
+  const sf = parseFloat(document.getElementById('ipaq_sent_fds')?.value) || 0;
+
+  // METs semanais
+  const metCam = 3.3 * cm * cd;
+  const metMod = 4.0 * mm * md;
+  const metVig = 8.0 * vm * vd;
+  const metTotal = metCam + metMod + metVig;
+
+  let nivel, css, desc;
+
+  // Sedentário
+  if (cd === 0 && md === 0 && vd === 0) {
+    nivel = 'Sedentário'; css = 'nivel-alto';
+    desc = 'Você não realizou nenhuma atividade física na última semana. O sedentarismo é um fator de risco para a saúde física e mental. Pequenas mudanças no cotidiano — como caminhadas curtas — já produzem benefícios significativos.';
+  }
+  // Insuficientemente ativo
+  else if (metTotal < 600) {
+    nivel = 'Insuficientemente Ativo'; css = 'nivel-medio';
+    desc = 'Você pratica alguma atividade física, mas abaixo do nível recomendado pela OMS. Aumentar gradualmente a frequência e a duração pode trazer ganhos expressivos para o bem-estar físico e emocional.';
+  }
+  // Ativo
+  else if (
+    (vd >= 3 && vm >= 20) ||
+    (md >= 5 && mm >= 30) ||
+    (cd >= 5 && cm >= 30) ||
+    (metTotal >= 600)
+  ) {
+    if (metTotal >= 3000) {
+      nivel = 'Muito Ativo'; css = 'nivel-baixo';
+      desc = 'Você apresenta um nível muito elevado de atividade física, acima das recomendações mínimas da OMS. Esse padrão está associado a importantes benefícios para a saúde física, regulação emocional e qualidade de vida.';
+    } else {
+      nivel = 'Ativo'; css = 'nivel-baixo';
+      desc = 'Você atinge as recomendações de atividade física da OMS. Esse padrão está associado a melhores indicadores de saúde física, regulação emocional e bem-estar geral.';
+    }
+  } else {
+    nivel = 'Insuficientemente Ativo'; css = 'nivel-medio';
+    desc = 'Você pratica alguma atividade física, mas ainda abaixo do recomendado. Incrementos graduais na rotina já produzem benefícios mensuráveis para a saúde.';
+  }
+
+  return {
+    nivel, css, desc, metTotal: +metTotal.toFixed(0),
+    cam_dias: cd, cam_min: cm, mod_dias: md, mod_min: mm,
+    vig_dias: vd, vig_min: vm, sent_semana: ss, sent_fds: sf
+  };
+}
+
+// ── Submit e finalização ──
+async function submitAndFinish() {
+  const btn = document.querySelector('#submit-status');
+  const submitBtn = document.querySelector('[onclick="submitAndFinish()"]');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Enviando...';
+  if (btn) btn.textContent = 'Registrando suas respostas...';
+
+  try {
+    if (SHEETS_URL && !SHEETS_URL.includes('COLE_AQUI')) {
+      const record = window._lastRecord;
+      await fetch(SHEETS_URL, {
+        method: 'POST', mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(record)
+      });
+    }
+    submitBtn.textContent = '✓ Respostas enviadas!';
+    submitBtn.style.background = 'var(--success)';
+    if (btn) btn.textContent = 'Obrigado! Suas respostas foram registradas com sucesso.';
+  } catch(e) {
+    submitBtn.disabled = false;
+    submitBtn.textContent = '✓ Enviar respostas';
+    if (btn) btn.textContent = 'Erro ao enviar. Tente novamente.';
+  }
 }
 
 // ════════════════════════════════════════════════
@@ -1324,30 +1575,117 @@ function renderFeedback() {
   }
   container.appendChild(tetradeSection);
 
-  // ── OUTRAS ESCALAS ──
-  const scales = [
-    { label: 'Ansiedade Cognitiva (ECOGA)', fn: scoreECOGA, classify: classifyECOGA },
-    { label: 'Percepção de Estresse (EPS-10)', fn: scoreEPS, classify: classifyEPS },
-    { label: 'Autoestima de Rosenberg', fn: scoreRosenberg, classify: classifyRosenberg },
-    { label: 'Autoeficácia para Vitimização', fn: scoreAutoeficacia, classify: classifyAutoeficacia },
-    { label: 'Satisfação com a Vida (ESV)', fn: scoreESV, classify: classifyESV },
-  ];
+  // ── Fator Geral SD4 ──
+  const fatorGeral = scoreTetradeFatorGeral();
+  const clGeral = classifyTetradeTrait(fatorGeral.score, fatorGeral.max, 'geral');
+  const pctGeral = fatorGeral.answered > 0 ? Math.round((fatorGeral.score / fatorGeral.max) * 100) : 0;
+  const cardGeral = document.createElement('div');
+  cardGeral.className = `scale-result-card ${clGeral.css}`;
+  cardGeral.innerHTML = `
+    <div class="result-scale-name">Tétrade Sombria — Fator Geral</div>
+    <div class="result-classification">${clGeral.level}</div>
+    <div class="result-score-bar-wrap"><div class="result-score-bar" style="width:${pctGeral}%"></div></div>
+    <div class="result-score-text">Pontuação: ${fatorGeral.score} / ${fatorGeral.max}</div>
+    <div class="result-description">${clGeral.desc}</div>
+  `;
+  tetradeSection.appendChild(cardGeral);
 
-  scales.forEach(s => {
-    const data = s.fn();
-    const cl = s.classify(data.score);
-    const pct = data.answered > 0 ? Math.round((data.score/data.max)*100) : 0;
-    const card = document.createElement('div');
-    card.className = `scale-result-card ${cl.css}`;
-    card.innerHTML = `
-      <div class="result-scale-name">${s.label}</div>
-      <div class="result-classification">${cl.level}</div>
-      <div class="result-score-bar-wrap"><div class="result-score-bar" style="width:${pct}%"></div></div>
-      <div class="result-score-text">Pontuação: ${data.score} / ${data.max}</div>
-      <div class="result-description">${cl.desc}</div>
-    `;
-    container.appendChild(card);
-  });
+  // ── ECOGA ──
+  const ecogaData = scoreECOGA();
+  const clEcoga = classifyECOGA(ecogaData.score);
+  const pctEcoga = ecogaData.answered > 0 ? Math.round((ecogaData.score / ecogaData.max) * 100) : 0;
+  const cardEcoga = document.createElement('div');
+  cardEcoga.className = `scale-result-card ${clEcoga.css}`;
+  cardEcoga.innerHTML = `
+    <div class="result-scale-name">Ansiedade Cognitiva (ECOGA)</div>
+    <div class="result-classification">${clEcoga.level}</div>
+    <div class="result-score-bar-wrap"><div class="result-score-bar" style="width:${pctEcoga}%"></div></div>
+    <div class="result-score-text">Pontuação: ${ecogaData.score} / ${ecogaData.max}</div>
+    <div class="result-description">${clEcoga.desc}</div>
+  `;
+  container.appendChild(cardEcoga);
+
+  // ── EPS-10 bifatorial ──
+  const eps = calcularEPS10();
+  const cardEPS = document.createElement('div');
+  cardEPS.className = `scale-result-card ${eps.cssEstresse}`;
+  cardEPS.innerHTML = `
+    <div class="result-scale-name">Percepção de Estresse (EPS-10)</div>
+    <div class="result-classification">${eps.faixaEstresse}</div>
+    <div style="display:flex;gap:10px;margin:10px 0">
+      <div style="flex:1;background:var(--border);border-radius:8px;padding:10px 12px">
+        <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--mid)">Fator Estresse</div>
+        <div style="font-weight:600;font-size:0.95rem;margin:3px 0">${eps.faixaEstresse}</div>
+        <div style="font-size:0.75rem;color:var(--mid)">z = ${eps.zEstresse}</div>
+      </div>
+      <div style="flex:1;background:var(--border);border-radius:8px;padding:10px 12px">
+        <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--mid)">Autoeficácia de Manejo</div>
+        <div style="font-weight:600;font-size:0.95rem;margin:3px 0">${eps.faixaAuto}</div>
+        <div style="font-size:0.75rem;color:var(--mid)">z = ${eps.zAuto}</div>
+      </div>
+    </div>
+    <div class="result-description">${eps.feedback}</div>
+  `;
+  container.appendChild(cardEPS);
+
+  // ── Rosenberg ──
+  const rosData = scoreRosenberg();
+  const clRos = classifyRosenberg(rosData.score);
+  const pctRos = rosData.answered > 0 ? Math.round((rosData.score / rosData.max) * 100) : 0;
+  const cardRos = document.createElement('div');
+  cardRos.className = `scale-result-card ${clRos.css}`;
+  cardRos.innerHTML = `
+    <div class="result-scale-name">Autoestima de Rosenberg</div>
+    <div class="result-classification">${clRos.level}</div>
+    <div class="result-score-bar-wrap"><div class="result-score-bar" style="width:${pctRos}%"></div></div>
+    <div class="result-score-text">Pontuação: ${rosData.score} / ${rosData.max}</div>
+    <div class="result-description">${clRos.desc}</div>
+  `;
+  container.appendChild(cardRos);
+
+  // ── EAREV (Autoeficácia frente à Vitimização) ──
+  const earev = calcularEAREV();
+  const pctEarev = Math.min(100, Math.max(0, Math.round(((earev.theta + 2) / 4) * 100)));
+  const cardEarev = document.createElement('div');
+  cardEarev.className = `scale-result-card ${earev.css}`;
+  cardEarev.innerHTML = `
+    <div class="result-scale-name">Autoeficácia frente à Vitimização (EAREV)</div>
+    <div class="result-classification">${earev.faixa}</div>
+    <div class="result-score-bar-wrap"><div class="result-score-bar" style="width:${pctEarev}%"></div></div>
+    <div class="result-score-text">Theta (θ): ${earev.theta}</div>
+    <div class="result-description">${earev.feedback}</div>
+  `;
+  container.appendChild(cardEarev);
+
+  // ── ESV ──
+  const esvData = scoreESV();
+  const clEsv = classifyESV(esvData.score);
+  const pctEsv = esvData.answered > 0 ? Math.round((esvData.score / esvData.max) * 100) : 0;
+  const cardEsv = document.createElement('div');
+  cardEsv.className = `scale-result-card ${clEsv.css}`;
+  cardEsv.innerHTML = `
+    <div class="result-scale-name">Satisfação com a Vida (ESV)</div>
+    <div class="result-classification">${clEsv.level}</div>
+    <div class="result-score-bar-wrap"><div class="result-score-bar" style="width:${pctEsv}%"></div></div>
+    <div class="result-score-text">Pontuação: ${esvData.score} / ${esvData.max}</div>
+    <div class="result-description">${clEsv.desc}</div>
+  `;
+  container.appendChild(cardEsv);
+
+
+  // ── IPAQ ──
+  const ipaq = calcularIPAQ();
+  const pctIPAQ = Math.min(100, Math.round((ipaq.metTotal / 3000) * 100));
+  const cardIPAQ = document.createElement('div');
+  cardIPAQ.className = `scale-result-card ${ipaq.css}`;
+  cardIPAQ.innerHTML = `
+    <div class="result-scale-name">Atividade Física (IPAQ)</div>
+    <div class="result-classification">${ipaq.nivel}</div>
+    <div class="result-score-bar-wrap"><div class="result-score-bar" style="width:${pctIPAQ}%"></div></div>
+    <div class="result-score-text">MET-minutos/semana: ${ipaq.metTotal} &nbsp;|&nbsp; Sedentarismo: ${ipaq.sent_semana}h/dia útil · ${ipaq.sent_fds}h/fim de semana</div>
+    <div class="result-description">${ipaq.desc}</div>
+  `;
+  container.appendChild(cardIPAQ);
 
   // animate bars
   setTimeout(() => {
@@ -1378,22 +1716,40 @@ function buildRecord() {
 
   // scale scores
   const ros = scoreRosenberg();
-  const eps = scoreEPS();
+  const eps = calcularEPS10();
   const ecoga = scoreECOGA();
-  const ae = scoreAutoeficacia();
+  const earev = calcularEAREV();
   const esv = scoreESV();
   const tet = scoreTetrade();
+  const tetGeral = scoreTetradeFatorGeral();
 
   const scores = {
     rosenberg_score: ros.score,
-    eps10_score: eps.score,
+    eps10_F1_estresse: eps.F1,
+    eps10_F2_autoeficacia: eps.F2,
+    eps10_z_estresse: eps.zEstresse,
+    eps10_z_autoeficacia: eps.zAuto,
+    eps10_faixa_estresse: eps.faixaEstresse,
+    eps10_faixa_autoeficacia: eps.faixaAuto,
     ecoga_score: ecoga.score,
-    autoeficacia_score: ae.score,
+    earev_theta: earev.theta,
+    earev_faixa: earev.faixa,
     esv_score: esv.score,
     maquiavelismo_score: tet.maquiavelismo.score,
     narcisismo_score: tet.narcisismo.score,
     psicopatia_score: tet.psicopatia.score,
     sadismo_score: tet.sadismo.score,
+    sd4_fator_geral: tetGeral.score,
+  };
+
+  // IPAQ fields
+  const ipaqData = calcularIPAQ();
+  const ipaqFields = {
+    ipaq_cam_dias: ipaqData.cam_dias, ipaq_cam_min: ipaqData.cam_min,
+    ipaq_mod_dias: ipaqData.mod_dias, ipaq_mod_min: ipaqData.mod_min,
+    ipaq_vig_dias: ipaqData.vig_dias, ipaq_vig_min: ipaqData.vig_min,
+    ipaq_sent_semana: ipaqData.sent_semana, ipaq_sent_fds: ipaqData.sent_fds,
+    ipaq_met_total: ipaqData.metTotal, ipaq_nivel: ipaqData.nivel,
   };
 
   // raw item responses
@@ -1403,7 +1759,7 @@ function buildRecord() {
     Object.entries(r).forEach(([k,v]) => { raw[`${prefix}_${k}`] = v; });
   });
 
-  return { ...demo, ...scores, ...raw };
+  return { ...demo, ...scores, ...ipaqFields, ...raw };
 }
 
 function saveRecord(record) {
@@ -1418,24 +1774,12 @@ function loadDB() {
   try { return JSON.parse(localStorage.getItem(DB_KEY) || '[]'); } catch(e){ return []; }
 }
 
-async function finishSurvey() {
+function finishSurvey() {
   const record = buildRecord();
   saveRecord(record);
+  window._lastRecord = record; // guardado para submitAndFinish
   renderFeedback();
-  goTo(11);
-  // Envia ao Google Sheets em background
-  if (SHEETS_URL && SHEETS_URL !== 'https://script.google.com/macros/s/AKfycbwWkOC_7Wy4RhLg8JA61Mdbx7w9refAW707Hr7ybqVBzOgKPpTDX2l7ncHZtONJyiIXbw/exec') {
-    try {
-      await fetch(SHEETS_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(record)
-      });
-    } catch(e) {
-      console.warn('Falha ao enviar ao Sheets:', e);
-    }
-  }
+  goTo(12);
 }
 
 function exportCSV() {
@@ -1463,12 +1807,12 @@ function viewDB() {
   const db = loadDB();
   document.getElementById('db-count').textContent = `${db.length} resposta(s) registrada(s) neste dispositivo.`;
   const viewer = document.getElementById('db-viewer');
-  if (!db.length) { viewer.innerHTML = '<p style="color:var(--mid)">Nenhuma resposta ainda.</p>'; goTo(12); return; }
+  if (!db.length) { viewer.innerHTML = '<p style="color:var(--mid)">Nenhuma resposta ainda.</p>'; goTo(13); return; }
   const keys = Object.keys(db[0]).slice(0, 15); // show first 15 cols
   const thead = keys.map(k=>`<th style="padding:8px 10px;white-space:nowrap;border-bottom:2px solid var(--border);font-size:0.75rem;text-align:left">${k}</th>`).join('');
   const tbody = db.map(r => `<tr>${keys.map(k=>`<td style="padding:7px 10px;font-size:0.8rem;border-bottom:1px solid var(--border);white-space:nowrap">${r[k]??''}</td>`).join('')}</tr>`).join('');
   viewer.innerHTML = `<table style="border-collapse:collapse;min-width:100%"><thead><tr>${thead}</tr></thead><tbody>${tbody}</tbody></table><p style="font-size:0.75rem;color:var(--mid);margin-top:8px">Exibindo primeiras 15 colunas. Exporte o CSV para ver todos os ${Object.keys(db[0]).length} campos.</p>`;
-  goTo(12);
+  goTo(13);
 }
 
 function clearDB() {
