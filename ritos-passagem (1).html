@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pesquisa – Ritos de Passagem | UNIP</title>
+<style>
+:root {
+  --primary: #0e7a6b;
+  --primary-light: #e0f3f0;
+  --primary-mid: #1aab96;
+  --text: #1a1a1a;
+  --text-muted: #5a5a5a;
+  --border: #d0d0d0;
+  --surface: #ffffff;
+  --bg: #f4f7f6;
+  --error: #E24B4A;
+  --radius: 10px;
+  --shadow: 0 2px 12px rgba(0,0,0,0.07);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; font-size: 15px; }
+
+header { background: var(--primary); color: #fff; padding: 2.5rem 1.5rem 2rem; text-align: center; }
+header .inst { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; opacity: .8; margin-bottom: .5rem; }
+header h1 { font-size: clamp(1.1rem,3vw,1.55rem); font-weight: 600; max-width: 700px; margin: 0 auto .75rem; line-height: 1.35; }
+header p { font-size: 13px; opacity: .75; max-width: 560px; margin: 0 auto; }
+
+.progress-wrap { background:#fff; border-bottom:1px solid var(--border); padding:.75rem 1.5rem; position:sticky; top:62px; z-index:100; display:flex; align-items:center; gap:12px; }
+.progress-bar-bg { flex:1; height:6px; background:#e0e0e0; border-radius:99px; overflow:hidden; }
+.progress-bar-fill { height:100%; background:var(--primary); border-radius:99px; transition:width .4s ease; width:0%; }
+.progress-label { font-size:12px; color:var(--text-muted); white-space:nowrap; }
+
+main { max-width:720px; margin:2rem auto; padding:0 1rem 4rem; }
+
+.section-label { font-size:11px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--primary); margin-bottom:1rem; padding-bottom:.4rem; border-bottom:2px solid var(--primary-light); }
+
+.info-box { background:var(--primary-light); border:1px solid #9fe1cb; border-radius:var(--radius); padding:1.25rem 1.5rem; margin-bottom:1.5rem; font-size:14px; color:#085041; line-height:1.7; }
+.info-box strong { display:block; font-size:13px; font-weight:600; margin-bottom:.4rem; color:#054035; }
+.info-box ul { padding-left:1.2rem; margin-top:.4rem; }
+.info-box ul li { margin-bottom:2px; }
+
+.tcle-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1.5rem; margin-bottom:1.25rem; box-shadow:var(--shadow); }
+.tcle-card h3 { font-size:15px; font-weight:600; margin-bottom:.75rem; }
+.tcle-card p { font-size:13.5px; color:var(--text-muted); line-height:1.7; margin-bottom:.75rem; }
+.tcle-link { display:inline-flex; align-items:center; gap:6px; font-size:13px; color:var(--primary); font-weight:500; text-decoration:none; border-bottom:1px solid transparent; transition:border-color .2s; margin-bottom:1.25rem; }
+.tcle-link:hover { border-color:var(--primary); }
+
+.question { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1.5rem; margin-bottom:1.25rem; box-shadow:var(--shadow); transition:border-color .2s; }
+.question:focus-within { border-color:var(--primary-mid); }
+.question.required-error { border-color:var(--error); }
+.question-header { display:flex; gap:10px; align-items:flex-start; margin-bottom:1rem; }
+.q-num { flex-shrink:0; width:26px; height:26px; border-radius:50%; background:var(--primary-light); color:var(--primary); font-size:12px; font-weight:600; display:flex; align-items:center; justify-content:center; }
+.q-text { font-weight:500; font-size:14.5px; line-height:1.45; }
+.q-text .req { color:var(--error); margin-left:2px; }
+.q-hint { font-size:12px; color:var(--text-muted); margin-top:2px; }
+
+.options { display:flex; flex-direction:column; gap:6px; }
+.option-label { display:flex; align-items:center; gap:10px; padding:8px 10px; border:1px solid var(--border); border-radius:7px; cursor:pointer; transition:background .15s,border-color .15s; font-size:14px; }
+.option-label:hover { background:var(--primary-light); border-color:var(--primary-mid); }
+.option-label input[type="radio"], .option-label input[type="checkbox"] { accent-color:var(--primary); width:16px; height:16px; flex-shrink:0; }
+.option-label.selected { background:var(--primary-light); border-color:var(--primary); }
+
+.inline-input { border:none; border-bottom:1px solid var(--border); background:transparent; font-size:14px; color:var(--text); width:180px; padding:2px 4px; outline:none; }
+.inline-input:focus { border-color:var(--primary); }
+
+.scale-wrap { display:flex; flex-direction:column; gap:8px; }
+.scale-row { display:flex; align-items:center; gap:10px; }
+.scale-row input[type="range"] { flex:1; accent-color:var(--primary); }
+.scale-value { font-size:22px; font-weight:600; color:var(--primary); min-width:32px; text-align:center; }
+.scale-labels { display:flex; justify-content:space-between; font-size:11px; color:var(--text-muted); }
+
+input[type="text"], input[type="number"] { border:1px solid var(--border); border-radius:6px; padding:8px 12px; font-size:14px; width:100%; color:var(--text); background:#fafafa; transition:border-color .2s; font-family:inherit; }
+input[type="text"]:focus, input[type="number"]:focus { outline:none; border-color:var(--primary); background:#fff; }
+
+/* OPEN QUESTION */
+.open-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1.5rem; margin-bottom:1.25rem; box-shadow:var(--shadow); }
+
+.answer-tabs { display:flex; gap:6px; margin-bottom:1rem; flex-wrap:wrap; }
+.tab-btn { display:flex; align-items:center; gap:6px; padding:7px 14px; border:1px solid var(--border); border-radius:20px; background:#fff; font-size:13px; cursor:pointer; color:var(--text-muted); transition:all .15s; font-family:inherit; }
+.tab-btn.active { background:var(--primary); border-color:var(--primary); color:#fff; }
+.tab-btn svg { width:15px; height:15px; flex-shrink:0; }
+
+textarea { width:100%; padding:12px 14px; border:1px solid var(--border); border-radius:8px; font-size:14px; font-family:inherit; resize:vertical; min-height:110px; color:var(--text); background:#fafafa; transition:border-color .2s; }
+textarea:focus { outline:none; border-color:var(--primary); background:#fff; }
+.char-count { font-size:12px; color:var(--text-muted); margin-top:4px; text-align:right; }
+
+/* AUDIO */
+.audio-panel { display:none; }
+.audio-panel.active { display:block; }
+
+.audio-controls { display:flex; flex-direction:column; align-items:center; gap:14px; padding:1.5rem; border:1px dashed var(--border); border-radius:8px; background:#fafafa; }
+.rec-btn { width:64px; height:64px; border-radius:50%; border:3px solid var(--primary); background:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+.rec-btn:hover { background:var(--primary-light); }
+.rec-btn.recording { border-color:var(--error); animation:pulse 1.2s ease infinite; }
+@keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(226,75,74,.35)} 70%{box-shadow:0 0 0 14px rgba(226,75,74,0)} 100%{box-shadow:0 0 0 0 rgba(226,75,74,0)} }
+.mic-svg { width:28px; height:28px; fill:var(--primary); }
+.rec-btn.recording .mic-svg { fill:var(--error); }
+.rec-timer { font-size:22px; font-variant-numeric:tabular-nums; font-weight:600; color:var(--error); display:none; }
+.rec-timer.on { display:block; }
+.rec-status { font-size:13px; color:var(--text-muted); text-align:center; }
+
+.playback-wrap { display:none; flex-direction:column; gap:10px; margin-top:10px; }
+.playback-wrap.on { display:flex; }
+audio { width:100%; border-radius:8px; }
+.delete-btn { background:none; border:1px solid var(--border); border-radius:6px; padding:6px 12px; font-size:12px; color:var(--text-muted); cursor:pointer; align-self:flex-start; display:flex; align-items:center; gap:5px; font-family:inherit; }
+.delete-btn:hover { color:var(--error); border-color:var(--error); }
+.trans-label { font-size:12px; color:var(--text-muted); margin-bottom:6px; margin-top:10px; }
+.trans-loading { display:none; align-items:center; gap:8px; font-size:13px; color:var(--text-muted); padding:8px 0; }
+.trans-loading.on { display:flex; }
+.dot-spin { width:14px; height:14px; border:2px solid var(--border); border-top-color:var(--primary); border-radius:50%; animation:spin .8s linear infinite; }
+@keyframes spin { to{transform:rotate(360deg)} }
+.trans-note { background:var(--primary-light); border:1px solid #9fe1cb; border-radius:6px; padding:8px 12px; font-size:12px; color:#085041; margin-top:8px; }
+
+.blocker { display:none; background:#fffbe6; border:1px solid #f0d875; border-radius:var(--radius); padding:1.25rem 1.5rem; color:#7a6000; font-size:14px; text-align:center; margin-bottom:1.5rem; }
+.stopper { display:none; background:var(--primary-light); border:1px solid #9fe1cb; border-radius:var(--radius); padding:1.5rem; color:#085041; font-size:14px; text-align:center; margin-bottom:1.5rem; }
+
+.error-msg { font-size:12px; color:var(--error); margin-top:6px; display:none; }
+.required-error .error-msg { display:block; }
+
+.submit-wrap { text-align:center; margin-top:2rem; }
+.submit-btn { background:var(--primary); color:#fff; border:none; border-radius:8px; padding:14px 40px; font-size:16px; font-weight:600; cursor:pointer; transition:background .2s,transform .1s; display:inline-flex; align-items:center; gap:8px; font-family:inherit; }
+.submit-btn:hover { background:#0a5e53; }
+.submit-btn:active { transform:scale(.98); }
+.submit-note { font-size:12px; color:var(--text-muted); margin-top:10px; }
+
+#success-screen { display:none; text-align:center; padding:3rem 1.5rem; }
+#success-screen.on { display:block; }
+.success-icon { width:70px; height:70px; border-radius:50%; background:var(--primary-light); display:flex; align-items:center; justify-content:center; margin:0 auto 1.5rem; }
+#success-screen h2 { font-size:1.4rem; font-weight:600; margin-bottom:.75rem; }
+#success-screen p { font-size:14px; color:var(--text-muted); max-width:440px; margin:0 auto; }
+
+@media(max-width:520px){ header{padding:2rem 1rem 1.5rem} .question,.open-card{padding:1.2rem 1rem} }
+
+  /* ── SHARED STANDARD ELEMENTS ── */
+  .site-topbar {
+    background: #fff;
+    border-bottom: 1px solid #e0ddd5;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .site-topbar img { height: 38px; width: auto; }
+  .site-topbar-text { display: flex; flex-direction: column; gap: 1px; }
+  .site-topbar-name { font-size: 13px; font-weight: 700; color: #0e7a6b; letter-spacing: 0.03em; }
+  .site-topbar-sub { font-size: 11px; color: #888; }
+  .site-topbar-back { margin-left: auto; font-size: 12px; color: #888; text-decoration: none; display: flex; align-items: center; gap: 4px; }
+  .site-topbar-back:hover { color: #333; }
+
+</style>
+</head>
+<body>
+<div class="site-topbar">
+  <img src="data:image/png;base64,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" alt="PerissinottoPsi">
+  <div class="site-topbar-text">
+    <span class="site-topbar-name">PerissinottoPsi</span>
+    <span class="site-topbar-sub">Observatório de Pesquisas em Psicologia · UNIP-Goiânia</span>
+  </div>
+  <a href="index.html" class="site-topbar-back">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    Todas as pesquisas
+  </a>
+</div>
+
+<header>
+  <div class="inst">UNIP – Universidade Paulista · Graduação em Psicologia</div>
+  <h1>Pandemia e Vulnerabilidade Psicossocial: Impactos em Populações que Perderam Rituais de Transição Social</h1>
+  <p>Pesquisa de campo · Curso de Psicologia · Prof. Dr. Rodrigo Perissinotto · 2026</p>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressBar"></div></div>
+  <span class="progress-label" id="progressLabel">0 de 16</span>
+</div>
+
+<main>
+<div id="form-body">
+
+<!-- ═══ SEÇÃO 1: TCLE ═══ -->
+<p class="section-label">Seção 1 — Termo de Consentimento</p>
+
+<div class="tcle-card">
+  <h3>Termo de Consentimento Livre e Esclarecido</h3>
+  <p>Esta pesquisa investiga os impactos psicossociais da interrupção ou adaptação de ritos de passagem durante a pandemia de COVID-19. Sua participação é <strong>voluntária e anônima</strong>, podendo ser interrompida a qualquer momento sem prejuízo. Tempo estimado: <strong>20 a 30 minutos</strong>. Os dados serão utilizados exclusivamente para fins científicos.</p>
+  <a href="https://unipead-my.sharepoint.com/:b:/g/personal/rodrigo_perissinotto_docente_unip_br/IQB4Jy2zvt3DSpVsaFV1iEK9AYCeaNvVhEa-fWkTxGpN7rE?e=r3oH4S" target="_blank" class="tcle-link">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+    Ler o TCLE completo (PDF)
+  </a>
+
+  <div class="question" id="q-tcle" style="margin-bottom:0;box-shadow:none;">
+    <div class="question-header" style="margin-bottom:.75rem;">
+      <div class="q-num">!</div>
+      <div><div class="q-text">Após ler o Termo de Consentimento, você concorda em participar?</div></div>
+    </div>
+    <div class="options">
+      <label class="option-label"><input type="radio" name="tcle" value="sim" onchange="onTCLE()"> Concordo em participar</label>
+      <label class="option-label"><input type="radio" name="tcle" value="nao" onchange="onTCLE()"> Não concordo em participar</label>
+    </div>
+  </div>
+</div>
+
+<div class="stopper" id="stop-tcle">Agradecemos seu interesse. Como você não concordou em participar, o formulário foi encerrado. Obrigado(a)!</div>
+
+<!-- ═══ SEÇÃO 2: FILTRO ═══ -->
+<div id="sec-filtro" style="display:none;">
+<p class="section-label" style="margin-top:1.5rem;">Seção 2 — Sobre os ritos de passagem</p>
+
+<div class="info-box">
+  <strong>O que são ritos de passagem?</strong>
+  São eventos ou cerimônias que marcam momentos importantes de mudança na vida das pessoas, representando a transição entre fases ou papéis sociais. Possuem significado simbólico e coletivo. Exemplos:
+  <ul>
+    <li>Casamentos</li>
+    <li>Formaturas</li>
+    <li>Aniversários importantes</li>
+    <li>Rituais fúnebres</li>
+    <li>Celebrações religiosas ou culturais ligadas a mudanças de vida</li>
+  </ul><br>
+  Durante a pandemia de COVID-19 (aprox. 2020–2022), muitos desses eventos foram cancelados, adiados ou realizados de forma diferente, devido às restrições sanitárias.
+</div>
+
+<div class="question" id="q-filtro">
+  <div class="question-header">
+    <div class="q-num">F</div>
+    <div><div class="q-text">Durante a pandemia, algum rito de passagem importante em sua vida foi cancelado, adiado ou realizado de forma diferente do planejado?</div></div>
+  </div>
+  <div class="options">
+    <label class="option-label"><input type="radio" name="filtro" value="sim" onchange="onFiltro()"> Sim</label>
+    <label class="option-label"><input type="radio" name="filtro" value="nao" onchange="onFiltro()"> Não</label>
+  </div>
+</div>
+
+<div class="stopper" id="stop-filtro">Agradecemos sua participação! Como você não vivenciou a interrupção de rituais durante a pandemia, o questionário foi encerrado aqui. Sua resposta já é uma contribuição importante.</div>
+
+<!-- ═══ SEÇÃO 3: SOCIODEMOGRÁFICO ═══ -->
+<div id="sec-demo" style="display:none;">
+<p class="section-label" style="margin-top:1.5rem;">Seção 3 — Dados sociodemográficos</p>
+
+<div class="question" id="q1">
+  <div class="question-header"><div class="q-num">1</div><div><div class="q-text">Idade</div></div></div>
+  <input type="number" id="q1v" min="18" max="120" placeholder="Digite sua idade" style="max-width:160px;" oninput="prog()">
+</div>
+
+<div class="question" id="q2">
+  <div class="question-header"><div class="q-num">2</div><div><div class="q-text">Gênero</div></div></div>
+  <div class="options">
+    <label class="option-label"><input type="radio" name="q2" value="Feminino"> Feminino</label>
+    <label class="option-label"><input type="radio" name="q2" value="Masculino"> Masculino</label>
+    <label class="option-label"><input type="radio" name="q2" value="outro"> Outro: <input class="inline-input" type="text" placeholder="Especifique"></label>
+    <label class="option-label"><input type="radio" name="q2" value="Prefiro não responder"> Prefiro não responder</label>
+  </div>
+</div>
+
+<div class="question" id="q3">
+  <div class="question-header"><div class="q-num">3</div><div><div class="q-text">Estado civil</div></div></div>
+  <div class="options">
+    <label class="option-label"><input type="radio" name="q3" value="Solteiro(a)"> Solteiro(a)</label>
+    <label class="option-label"><input type="radio" name="q3" value="Casado(a) / União estável"> Casado(a) / União estável</label>
+    <label class="option-label"><input type="radio" name="q3" value="Divorciado(a)"> Divorciado(a)</label>
+    <label class="option-label"><input type="radio" name="q3" value="Viúvo(a)"> Viúvo(a)</label>
+  </div>
+</div>
+
+<div class="question" id="q4">
+  <div class="question-header"><div class="q-num">4</div><div><div class="q-text">Escolaridade</div></div></div>
+  <div class="options">
+    <label class="option-label"><input type="radio" name="q4" value="Ensino fundamental"> Ensino fundamental</label>
+    <label class="option-label"><input type="radio" name="q4" value="Ensino médio"> Ensino médio</label>
+    <label class="option-label"><input type="radio" name="q4" value="Ensino superior incompleto"> Ensino superior incompleto</label>
+    <label class="option-label"><input type="radio" name="q4" value="Ensino superior completo"> Ensino superior completo</label>
+    <label class="option-label"><input type="radio" name="q4" value="Pós-graduação"> Pós-graduação</label>
+  </div>
+</div>
+
+<div class="question" id="q5">
+  <div class="question-header"><div class="q-num">5</div><div><div class="q-text">Cidade e estado onde reside</div></div></div>
+  <input type="text" id="q5v" placeholder="Ex: Goiânia, GO" oninput="prog()">
+</div>
+
+<!-- ═══ SEÇÃO 4: IDENTIFICAÇÃO DO RITO ═══ -->
+<p class="section-label" style="margin-top:1.5rem;">Seção 4 — Identificação do rito de passagem</p>
+
+<div class="question" id="q6">
+  <div class="question-header"><div class="q-num">6</div><div><div class="q-text">Durante a pandemia, quais ritos de passagem foram afetados em sua vida?</div><div class="q-hint">Pode marcar mais de uma opção</div></div></div>
+  <div class="options">
+    <label class="option-label"><input type="checkbox" name="q6" value="Casamento"> Casamento</label>
+    <label class="option-label"><input type="checkbox" name="q6" value="Aniversário"> Aniversário</label>
+    <label class="option-label"><input type="checkbox" name="q6" value="Formatura"> Formatura</label>
+    <label class="option-label"><input type="checkbox" name="q6" value="Ritual fúnebre"> Ritual fúnebre</label>
+    <label class="option-label"><input type="checkbox" name="q6" value="outro"> Outro: <input class="inline-input" type="text" placeholder="Especifique"></label>
+  </div>
+</div>
+
+<div class="question" id="q7">
+  <div class="question-header"><div class="q-num">7</div><div><div class="q-text">Qual desses ritos teve <strong>maior impacto</strong> para você?</div></div></div>
+  <div class="options">
+    <label class="option-label"><input type="radio" name="q7" value="Casamento"> Casamento</label>
+    <label class="option-label"><input type="radio" name="q7" value="Aniversário"> Aniversário</label>
+    <label class="option-label"><input type="radio" name="q7" value="Formatura"> Formatura</label>
+    <label class="option-label"><input type="radio" name="q7" value="Ritual fúnebre"> Ritual fúnebre</label>
+    <label class="option-label"><input type="radio" name="q7" value="outro"> Outro: <input class="inline-input" type="text" placeholder="Especifique"></label>
+  </div>
+  <div style="margin-top:.75rem;padding:10px 12px;background:var(--primary-light);border-radius:6px;font-size:13px;color:#085041;">Nas próximas perguntas, responda pensando principalmente nesse rito.</div>
+</div>
+
+<!-- ═══ SEÇÃO 5: CARACTERÍSTICAS ═══ -->
+<p class="section-label" style="margin-top:1.5rem;">Seção 5 — Características da experiência</p>
+
+<div class="question" id="q8">
+  <div class="question-header"><div class="q-num">8</div><div><div class="q-text">De que forma esse rito foi afetado?</div></div></div>
+  <div class="options">
+    <label class="option-label"><input type="radio" name="q8" value="Foi cancelado"> Foi cancelado</label>
+    <label class="option-label"><input type="radio" name="q8" value="Foi adiado"> Foi adiado</label>
+    <label class="option-label"><input type="radio" name="q8" value="Realizado de forma adaptada (online ou com poucas pessoas)"> Realizado de forma adaptada (online ou com poucas pessoas)</label>
+    <label class="option-label"><input type="radio" name="q8" value="outro"> Outro: <input class="inline-input" type="text" placeholder="Especifique"></label>
+  </div>
+</div>
+
+<div class="question" id="q9">
+  <div class="question-header"><div class="q-num">9</div><div><div class="q-text">Quem tomou a decisão de modificar ou cancelar o evento?</div></div></div>
+  <div class="options">
+    <label class="option-label"><input type="radio" name="q9" value="Eu"> Eu</label>
+    <label class="option-label"><input type="radio" name="q9" value="Família"> Família</label>
+    <label class="option-label"><input type="radio" name="q9" value="Instituição responsável"> Instituição responsável</label>
+    <label class="option-label"><input type="radio" name="q9" value="Circunstâncias externas (restrições sanitárias)"> Circunstâncias externas (restrições sanitárias)</label>
+    <label class="option-label"><input type="radio" name="q9" value="outro"> Outro: <input class="inline-input" type="text" placeholder="Especifique"></label>
+  </div>
+</div>
+
+<div class="question" id="q10">
+  <div class="question-header"><div class="q-num">10</div><div><div class="q-text">Em uma escala de 0 a 10, quanto esse evento era importante para você?</div></div></div>
+  <div class="scale-wrap">
+    <div class="scale-row">
+      <input type="range" id="q10v" min="0" max="10" value="5" oninput="document.getElementById('q10n').textContent=this.value;prog()">
+      <div class="scale-value" id="q10n">5</div>
+    </div>
+    <div class="scale-labels"><span>0 — Nada importante</span><span>10 — Extremamente importante</span></div>
+  </div>
+</div>
+
+<!-- ═══ SEÇÃO 6: EXPERIÊNCIA VIVIDA ═══ -->
+<p class="section-label" style="margin-top:1.5rem;">Seção 6 — Experiência vivida</p>
+
+<!-- Q11 -->
+<div class="open-card">
+  <div class="question-header" style="margin-bottom:.8rem;"><div class="q-num">11</div><div><div class="q-text">Conte brevemente como foi a experiência de ter esse rito afetado durante a pandemia.</div></div></div>
+  <div class="answer-tabs">
+    <button class="tab-btn active" id="ttq11" onclick="tab('q11','text')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg>Por escrito</button>
+    <button class="tab-btn" id="taq11" onclick="tab('q11','audio')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>Gravar áudio</button>
+  </div>
+  <div id="tp-q11"><textarea id="tv-q11" placeholder="Escreva aqui..." oninput="cc('q11');prog()"></textarea><div class="char-count" id="cc-q11">0 caracteres</div></div>
+  <div class="audio-panel" id="ap-q11"></div>
+</div>
+
+<!-- Q12 -->
+<div class="open-card">
+  <div class="question-header" style="margin-bottom:.8rem;"><div class="q-num">12</div><div><div class="q-text">Antes da pandemia, o que esse rito de passagem representava para você?</div></div></div>
+  <div class="answer-tabs">
+    <button class="tab-btn active" id="ttq12" onclick="tab('q12','text')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg>Por escrito</button>
+    <button class="tab-btn" id="taq12" onclick="tab('q12','audio')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>Gravar áudio</button>
+  </div>
+  <div id="tp-q12"><textarea id="tv-q12" placeholder="Escreva aqui..." oninput="cc('q12');prog()"></textarea><div class="char-count" id="cc-q12">0 caracteres</div></div>
+  <div class="audio-panel" id="ap-q12"></div>
+</div>
+
+<!-- ═══ SEÇÃO 7: IMPACTOS ═══ -->
+<p class="section-label" style="margin-top:1.5rem;">Seção 7 — Impactos psicossociais</p>
+
+<!-- Q13 -->
+<div class="open-card">
+  <div class="question-header" style="margin-bottom:.8rem;"><div class="q-num">13</div><div><div class="q-text">Como você se sentiu quando esse evento foi cancelado, adiado ou modificado?</div></div></div>
+  <div class="answer-tabs">
+    <button class="tab-btn active" id="ttq13" onclick="tab('q13','text')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg>Por escrito</button>
+    <button class="tab-btn" id="taq13" onclick="tab('q13','audio')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>Gravar áudio</button>
+  </div>
+  <div id="tp-q13"><textarea id="tv-q13" placeholder="Escreva aqui..." oninput="cc('q13');prog()"></textarea><div class="char-count" id="cc-q13">0 caracteres</div></div>
+  <div class="audio-panel" id="ap-q13"></div>
+</div>
+
+<div class="question" id="q14">
+  <div class="question-header"><div class="q-num">14</div><div><div class="q-text">Você percebeu algum impacto emocional decorrente dessa experiência?</div></div></div>
+  <div class="options">
+    <label class="option-label"><input type="radio" name="q14" value="Sim" onchange="showDesc('ie',true)"> Sim</label>
+    <label class="option-label"><input type="radio" name="q14" value="Não" onchange="showDesc('ie',false)"> Não</label>
+    <label class="option-label"><input type="radio" name="q14" value="Não tenho certeza" onchange="showDesc('ie',false)"> Não tenho certeza</label>
+  </div>
+  <div id="ie-wrap" style="display:none;margin-top:.75rem;">
+    <div class="answer-tabs">
+      <button class="tab-btn active" id="ttq14d" onclick="tab('q14d','text')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg>Por escrito</button>
+      <button class="tab-btn" id="taq14d" onclick="tab('q14d','audio')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>Gravar áudio</button>
+    </div>
+    <div id="tp-q14d"><textarea id="tv-q14d" placeholder="Descreva o impacto emocional..." oninput="cc('q14d');prog()"></textarea><div class="char-count" id="cc-q14d">0 caracteres</div></div>
+    <div class="audio-panel" id="ap-q14d"></div>
+  </div>
+</div>
+
+<!-- Q15 -->
+<div class="open-card">
+  <div class="question-header" style="margin-bottom:.8rem;"><div class="q-num">15</div><div><div class="q-text">Essa situação teve algum impacto em suas relações sociais ou familiares?</div></div></div>
+  <div class="answer-tabs">
+    <button class="tab-btn active" id="ttq15" onclick="tab('q15','text')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg>Por escrito</button>
+    <button class="tab-btn" id="taq15" onclick="tab('q15','audio')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>Gravar áudio</button>
+  </div>
+  <div id="tp-q15"><textarea id="tv-q15" placeholder="Escreva aqui..." oninput="cc('q15');prog()"></textarea><div class="char-count" id="cc-q15">0 caracteres</div></div>
+  <div class="audio-panel" id="ap-q15"></div>
+</div>
+
+<!-- ═══ SEÇÃO 8: ENFRENTAMENTO ═══ -->
+<p class="section-label" style="margin-top:1.5rem;">Seção 8 — Estratégias de enfrentamento</p>
+
+<div class="question" id="q16">
+  <div class="question-header"><div class="q-num">16</div><div><div class="q-text">O que você fez para lidar com essa situação?</div><div class="q-hint">Pode marcar mais de uma opção</div></div></div>
+  <div class="options">
+    <label class="option-label"><input type="checkbox" name="q16" value="Conversei com familiares ou amigos"> Conversei com familiares ou amigos</label>
+    <label class="option-label"><input type="checkbox" name="q16" value="Busquei apoio religioso ou espiritual"> Busquei apoio religioso ou espiritual</label>
+    <label class="option-label"><input type="checkbox" name="q16" value="Realizei uma celebração alternativa"> Realizei uma celebração alternativa</label>
+    <label class="option-label"><input type="checkbox" name="q16" value="Foquei em outras atividades"> Foquei em outras atividades</label>
+    <label class="option-label"><input type="checkbox" name="q16" value="Não consegui lidar bem"> Não consegui lidar bem</label>
+    <label class="option-label"><input type="checkbox" name="q16" value="outro"> Outro: <input class="inline-input" type="text" placeholder="Especifique"></label>
+  </div>
+</div>
+
+<div class="question" id="q17">
+  <div class="question-header"><div class="q-num">17</div><div><div class="q-text">Posteriormente, você conseguiu realizar esse rito de alguma forma?</div></div></div>
+  <div class="options">
+    <label class="option-label"><input type="radio" name="q17" value="Sim" onchange="showDesc('rd',true)"> Sim</label>
+    <label class="option-label"><input type="radio" name="q17" value="Não" onchange="showDesc('rd',false)"> Não</label>
+  </div>
+  <div id="rd-wrap" style="display:none;margin-top:.75rem;">
+    <div class="answer-tabs">
+      <button class="tab-btn active" id="ttq17d" onclick="tab('q17d','text')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg>Por escrito</button>
+      <button class="tab-btn" id="taq17d" onclick="tab('q17d','audio')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>Gravar áudio</button>
+    </div>
+    <div id="tp-q17d"><textarea id="tv-q17d" placeholder="Se sim, descreva como foi..." oninput="cc('q17d');prog()"></textarea><div class="char-count" id="cc-q17d">0 caracteres</div></div>
+    <div class="audio-panel" id="ap-q17d"></div>
+  </div>
+</div>
+
+<!-- ═══ SEÇÃO 9: RESSIGNIFICAÇÃO ═══ -->
+<p class="section-label" style="margin-top:1.5rem;">Seção 9 — Ressignificação</p>
+
+<!-- Q18 -->
+<div class="open-card">
+  <div class="question-header" style="margin-bottom:.8rem;"><div class="q-num">18</div><div><div class="q-text">Após a pandemia, sua percepção sobre rituais e celebrações mudou? Descreva.</div></div></div>
+  <div class="answer-tabs">
+    <button class="tab-btn active" id="ttq18" onclick="tab('q18','text')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg>Por escrito</button>
+    <button class="tab-btn" id="taq18" onclick="tab('q18','audio')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>Gravar áudio</button>
+  </div>
+  <div id="tp-q18"><textarea id="tv-q18" placeholder="Escreva aqui..." oninput="cc('q18');prog()"></textarea><div class="char-count" id="cc-q18">0 caracteres</div></div>
+  <div class="audio-panel" id="ap-q18"></div>
+</div>
+
+<!-- Q19 -->
+<div class="open-card">
+  <div class="question-header" style="margin-bottom:.8rem;"><div class="q-num">19</div><div><div class="q-text">Que significado esse evento passou a ter para você depois da pandemia?</div></div></div>
+  <div class="answer-tabs">
+    <button class="tab-btn active" id="ttq19" onclick="tab('q19','text')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg>Por escrito</button>
+    <button class="tab-btn" id="taq19" onclick="tab('q19','audio')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>Gravar áudio</button>
+  </div>
+  <div id="tp-q19"><textarea id="tv-q19" placeholder="Escreva aqui..." oninput="cc('q19');prog()"></textarea><div class="char-count" id="cc-q19">0 caracteres</div></div>
+  <div class="audio-panel" id="ap-q19"></div>
+</div>
+
+<!-- Q20 -->
+<div class="open-card">
+  <div class="question-header" style="margin-bottom:.8rem;"><div class="q-num">20</div><div><div class="q-text">Gostaria de compartilhar algum comentário adicional sobre sua experiência? <span style="font-weight:400;color:var(--text-muted)">(opcional)</span></div></div></div>
+  <div class="answer-tabs">
+    <button class="tab-btn active" id="ttq20" onclick="tab('q20','text')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg>Por escrito</button>
+    <button class="tab-btn" id="taq20" onclick="tab('q20','audio')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>Gravar áudio</button>
+  </div>
+  <div id="tp-q20"><textarea id="tv-q20" placeholder="Escreva aqui (opcional)..." oninput="cc('q20');prog()"></textarea><div class="char-count" id="cc-q20">0 caracteres</div></div>
+  <div class="audio-panel" id="ap-q20"></div>
+</div>
+
+<!-- SUBMIT -->
+<div class="submit-wrap">
+  <button class="submit-btn" id="submitBtn" onclick="submit()">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    Enviar respostas
+  </button>
+  <p class="submit-note">Suas respostas são anônimas e utilizadas exclusivamente para fins científicos.</p>
+</div>
+
+</div><!-- /sec-demo -->
+</div><!-- /sec-filtro -->
+</div><!-- /form-body -->
+
+<!-- SUCCESS -->
+<div id="success-screen">
+  <div class="success-icon">
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#0e7a6b" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+  </div>
+  <h2>Obrigada pela sua participação!</h2>
+  <p>Suas respostas foram registradas com sucesso. Elas contribuirão para a compreensão dos impactos psicossociais da pandemia e da importância dos ritos de passagem na vida social.</p>
+  <p style="margin-top:1rem;font-size:13px;color:var(--text-muted);">Pesquisa realizada por alunas do curso de Psicologia – UNIP Campus Goiânia Flamboyant, sob orientação do Prof. Dr. Rodrigo Perissinotto.</p>
+</div>
+
+</main>
+
+<script>
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwibVG7L4eviZd54PXVVDR1EtBVqJuZiG1MPdv1CUgcy9xpTiJ5pulHYTu1xDBnDeGi/exec';
+const OPEN_IDS = ['q11','q12','q13','q14d','q15','q17d','q18','q19','q20'];
+const rec = {}; // audio state per question
+
+// ── BUILD AUDIO PANELS
+OPEN_IDS.forEach(id => {
+  const panel = document.getElementById('ap-' + id);
+  if (!panel) return;
+  rec[id] = { mr: null, chunks: [], blob: null, live: '', timer: null, secs: 0, sr: null };
+  panel.innerHTML = `
+    <div class="audio-controls">
+      <button class="rec-btn" id="rb-${id}" onclick="toggleRec('${id}')">
+        <svg class="mic-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2" fill="none" stroke="none"/></svg>
+      </button>
+      <div class="rec-timer" id="rt-${id}">0:00</div>
+      <div class="rec-status" id="rs-${id}"><strong>Clique no microfone</strong> para iniciar a gravação.</div>
+    </div>
+    <div class="playback-wrap" id="pw-${id}">
+      <audio id="pl-${id}" controls></audio>
+      <button class="delete-btn" onclick="delRec('${id}')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+        Apagar e regravar
+      </button>
+      <div class="trans-label">Transcrição automática</div>
+      <div class="trans-loading" id="tl-${id}"><div class="dot-spin"></div> Transcrevendo...</div>
+      <textarea id="tr-${id}" rows="4" placeholder="A transcrição aparecerá aqui. Você pode editar antes de enviar." oninput="prog()"></textarea>
+      <div class="trans-note">✓ Você pode corrigir o texto antes de enviar.</div>
+    </div>`;
+});
+
+// ── TAB SWITCH
+function tab(id, mode) {
+  const tp = document.getElementById('tp-' + id);
+  const ap = document.getElementById('ap-' + id);
+  const tt = document.getElementById('tt' + id);
+  const ta = document.getElementById('ta' + id);
+  if (!tp || !ap) return;
+  tp.style.display = mode === 'text' ? 'block' : 'none';
+  ap.style.display = mode === 'audio' ? 'block' : 'none';
+  if (mode === 'audio') ap.classList.add('active'); else ap.classList.remove('active');
+  tt && tt.classList.toggle('active', mode === 'text');
+  ta && ta.classList.toggle('active', mode === 'audio');
+}
+
+// ── AUDIO RECORDING
+async function toggleRec(id) {
+  const s = rec[id];
+  if (s.mr && s.mr.state === 'recording') stopRec(id);
+  else startRec(id);
+}
+
+async function startRec(id) {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const s = rec[id];
+    s.chunks = []; s.live = '';
+    s.mr = new MediaRecorder(stream);
+    s.mr.ondataavailable = e => s.chunks.push(e.data);
+    s.mr.onstop = () => onStop(id);
+    s.mr.start();
+    document.getElementById('rb-' + id).classList.add('recording');
+    document.getElementById('rs-' + id).innerHTML = '<strong style="color:var(--error)">Gravando...</strong> Clique para parar.';
+    document.getElementById('rt-' + id).classList.add('on');
+    s.secs = 0;
+    s.timer = setInterval(() => {
+      s.secs++;
+      const m = Math.floor(s.secs / 60), sc = String(s.secs % 60).padStart(2,'0');
+      document.getElementById('rt-' + id).textContent = m + ':' + sc;
+    }, 1000);
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SR) {
+      s.sr = new SR(); s.sr.lang = 'pt-BR'; s.sr.continuous = true; s.sr.interimResults = true;
+      s.sr.onresult = ev => {
+        let interim = '';
+        for (let i = ev.resultIndex; i < ev.results.length; i++) {
+          if (ev.results[i].isFinal) s.live += ev.results[i][0].transcript + ' ';
+          else interim = ev.results[i][0].transcript;
+        }
+        document.getElementById('tr-' + id).value = s.live + interim;
+      };
+      s.sr.start();
+    }
+  } catch(e) {
+    alert('Não foi possível acessar o microfone. Verifique as permissões ou use a opção "Por escrito".');
+  }
+}
+
+function stopRec(id) {
+  const s = rec[id];
+  if (s.mr) { s.mr.stop(); s.mr.stream.getTracks().forEach(t => t.stop()); }
+  if (s.sr) { try { s.sr.stop(); } catch(e){} }
+  clearInterval(s.timer);
+  document.getElementById('rb-' + id).classList.remove('recording');
+  document.getElementById('rt-' + id).classList.remove('on');
+  document.getElementById('rs-' + id).innerHTML = '<strong>Gravação concluída.</strong>';
+}
+
+async function transcribeWhisper(id, blob) {
+  const ld = document.getElementById('tl-' + id);
+  const ta = document.getElementById('tr-' + id);
+  ld.classList.add('on');
+  ta.placeholder = 'Transcrevendo com IA...';
+  try {
+    const formData = new FormData();
+    formData.append('file', new File([blob], 'audio.webm', { type: 'audio/webm' }));
+    formData.append('model', 'whisper-1');
+    formData.append('language', 'pt');
+    const res = await fetch('https://whisper-proxy.perissinotto-prof.workers.dev', {
+      method: 'POST',
+      body: formData
+    });
+    const data = await res.json();
+    ld.classList.remove('on');
+    if (data.text) {
+      ta.value = data.text;
+      ta.placeholder = '';
+    } else {
+      ta.placeholder = 'Não foi possível transcrever. Edite o texto manualmente.';
+    }
+  } catch(err) {
+    ld.classList.remove('on');
+    ta.placeholder = 'Erro na transcrição. Edite o texto manualmente.';
+  }
+  prog();
+}
+
+function onStop(id) {
+  const s = rec[id];
+  s.blob = new Blob(s.chunks, { type: 'audio/webm' });
+  document.getElementById('pl-' + id).src = URL.createObjectURL(s.blob);
+  document.getElementById('pw-' + id).classList.add('on');
+  transcribeWhisper(id, s.blob);
+  prog();
+}
+
+function delRec(id) {
+  const s = rec[id];
+  s.blob = null; s.live = '';
+  document.getElementById('pl-' + id).src = '';
+  document.getElementById('pw-' + id).classList.remove('on');
+  document.getElementById('tr-' + id).value = '';
+  document.getElementById('rs-' + id).innerHTML = '<strong>Clique no microfone</strong> para iniciar a gravação.';
+  document.getElementById('rt-' + id).textContent = '0:00';
+  prog();
+}
+
+// ── HELPERS
+function cc(id) {
+  const ta = document.getElementById('tv-' + id);
+  const el = document.getElementById('cc-' + id);
+  if (ta && el) el.textContent = ta.value.length + ' caracteres';
+}
+
+function getOpen(id) {
+  const tv = document.getElementById('tv-' + id);
+  const tr = document.getElementById('tr-' + id);
+  return (tv && tv.value.trim()) || (tr && tr.value.trim()) || '';
+}
+
+function getRadio(name) { const el = document.querySelector(`input[name="${name}"]:checked`); return el ? el.value : ''; }
+function getCB(name) { return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(c => c.value).join('; '); }
+
+// ── CONDITIONALS
+function onTCLE() {
+  const v = getRadio('tcle');
+  document.getElementById('sec-filtro').style.display = v === 'sim' ? 'block' : 'none';
+  document.getElementById('stop-tcle').style.display = v === 'nao' ? 'block' : 'none';
+  prog();
+}
+function onFiltro() {
+  const v = getRadio('filtro');
+  document.getElementById('sec-demo').style.display = v === 'sim' ? 'block' : 'none';
+  document.getElementById('stop-filtro').style.display = v === 'nao' ? 'block' : 'none';
+  prog();
+}
+function showDesc(key, show) {
+  document.getElementById(key + '-wrap').style.display = show ? 'block' : 'none';
+  prog();
+}
+
+// ── OPTION HIGHLIGHT
+document.addEventListener('change', e => {
+  const inp = e.target;
+  if (inp.type === 'radio') {
+    document.querySelectorAll(`input[name="${inp.name}"]`).forEach(r => r.closest('.option-label') && r.closest('.option-label').classList.remove('selected'));
+    inp.closest('.option-label') && inp.closest('.option-label').classList.add('selected');
+  }
+  if (inp.type === 'checkbox') {
+    inp.closest('.option-label') && inp.closest('.option-label').classList.toggle('selected', inp.checked);
+  }
+  prog();
+});
+
+// ── PROGRESS
+function prog() {
+  let done = 0, total = 16;
+  const radios = ['tcle','filtro','q2','q3','q4','q7','q8','q9','q14','q17'];
+  radios.forEach(n => { if (getRadio(n)) done++; });
+  if (document.getElementById('q1v') && document.getElementById('q1v').value) done++;
+  if (document.getElementById('q5v') && document.getElementById('q5v').value.trim()) done++;
+  if (document.querySelector('input[name="q6"]:checked')) done++;
+  if (document.getElementById('q10v')) done++;
+  done = Math.min(done, total);
+  document.getElementById('progressBar').style.width = Math.round(done / total * 100) + '%';
+  document.getElementById('progressLabel').textContent = done + ' de ' + total;
+}
+
+// ── SUBMIT
+function submit() {
+  // Apenas TCLE e filtro são verificados para direcionar o fluxo
+  if (getRadio('tcle') === 'nao') return;
+  if (!getRadio('tcle')) {
+    document.getElementById('q-tcle').scrollIntoView({ behavior:'smooth', block:'center' }); return;
+  }
+  if (getRadio('filtro') === 'nao') return;
+  if (!getRadio('filtro')) {
+    document.getElementById('q-filtro').scrollIntoView({ behavior:'smooth', block:'center' }); return;
+  }
+
+  const data = {
+    idade: document.getElementById('q1v').value,
+    genero: getRadio('q2'),
+    estadoCivil: getRadio('q3'),
+    escolaridade: getRadio('q4'),
+    cidadeEstado: document.getElementById('q5v').value.trim(),
+    ritosAfetados: getCB('q6'),
+    ritoMaiorImpacto: getRadio('q7'),
+    formaAfetada: getRadio('q8'),
+    quemDecidiu: getRadio('q9'),
+    importanciaEscala: document.getElementById('q10v').value,
+    experienciaVivida: getOpen('q11'),
+    significadoAntes: getOpen('q12'),
+    comoSeSentiu: getOpen('q13'),
+    impactoEmocionalSN: getRadio('q14'),
+    impactoEmocionalDescricao: getOpen('q14d'),
+    impactoRelacoesSociais: getOpen('q15'),
+    estrategiasEnfrentamento: getCB('q16'),
+    realizouDepois: getRadio('q17'),
+    realizouDescricao: getOpen('q17d'),
+    percepcaoMudou: getOpen('q18'),
+    significadoApos: getOpen('q19'),
+    comentarioAdicional: getOpen('q20')
+  };
+
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="dot-spin" style="border-top-color:#fff"></div> Enviando...';
+  btn.style.opacity = '.75';
+
+  fetch(SHEET_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data) })
+    .then(() => {
+      document.getElementById('form-body').style.display = 'none';
+      document.getElementById('success-screen').classList.add('on');
+      window.scrollTo({ top:0, behavior:'smooth' });
+      document.getElementById('progressBar').style.width = '100%';
+      document.getElementById('progressLabel').textContent = '16 de 16';
+    })
+    .catch(() => {
+      btn.disabled = false;
+      btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Enviar respostas';
+      btn.style.opacity = '1';
+      alert('Erro ao enviar. Verifique sua conexão e tente novamente.');
+    });
+}
+</script>
+</body>
+</html>
