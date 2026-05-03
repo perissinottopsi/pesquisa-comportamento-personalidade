@@ -987,7 +987,9 @@ async function startRecording() {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     audioChunks = [];
     liveTranscript = '';
-    mediaRecorder = new MediaRecorder(stream);
+    const mimeType = getSupportedMimeType();
+    mediaRecorder = new MediaRecorder(stream, mimeType ? { mimeType } : {});
+    mediaRecorder._mimeType = mimeType;
     mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
     mediaRecorder.onstop = onRecordingStop;
     mediaRecorder.start();
@@ -1038,14 +1040,16 @@ function stopRecording() {
   document.getElementById('recStatus').innerHTML = '<strong>Gravação concluída.</strong> Ouça o áudio abaixo.';
 }
 
-async function transcribeWithWhisper(blob) {
+async function transcribeWithWhisper(blob, mimeType) {
+  mimeType = mimeType || 'audio/webm';
+  const ext = getFileExtension(mimeType);
   const loading = document.getElementById('transcriptionLoading');
   const textarea = document.getElementById('q13-transcription');
   loading.classList.add('visible');
   textarea.placeholder = 'Transcrevendo com IA...';
   try {
     const formData = new FormData();
-    formData.append('file', new File([blob], 'audio.webm', { type: 'audio/webm' }));
+    formData.append('file', new File([blob], 'audio.' + ext, { type: mimeType }));
     formData.append('model', 'whisper-1');
     formData.append('language', 'pt');
     const res = await fetch('https://whisper-proxy.perissinotto-prof.workers.dev', {
@@ -1068,12 +1072,13 @@ async function transcribeWithWhisper(blob) {
 }
 
 function onRecordingStop() {
-  audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+  const mimeType = mediaRecorder._mimeType || 'audio/webm';
+  audioBlob = new Blob(audioChunks, { type: mimeType });
   const url = URL.createObjectURL(audioBlob);
   const player = document.getElementById('audioPlayer');
   player.src = url;
   document.getElementById('audio-playback-wrap').classList.add('visible');
-  transcribeWithWhisper(audioBlob);
+  transcribeWithWhisper(audioBlob, mimeType);
   updateProgress();
 }
 
