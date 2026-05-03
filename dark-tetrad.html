@@ -472,6 +472,77 @@
     .info-cards { grid-template-columns: 1fr 1fr; }
     .welcome-hero h2 { font-size: 1.5rem; }
   }
+
+  /* ── TOPBAR ── */
+  .site-topbar {
+    background: #fff;
+    border-bottom: 1px solid #d8d4c8;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+  }
+  .site-topbar img { height: 36px; width: auto; }
+  .site-topbar-name { font-size: 12px; font-weight: 600; color: #2a4d8f; letter-spacing: 0.04em; }
+  .site-topbar-sub { font-size: 11px; color: #888; }
+
+  /* ── AGE GATE ── */
+  .age-gate {
+    background: #fffbe6;
+    border: 1px solid #f0d875;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.25rem;
+    font-size: 14px;
+    color: #7a6000;
+  }
+  .age-gate strong { display: block; margin-bottom: 6px; }
+  .age-gate-row { display: flex; align-items: center; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
+  .age-gate-row input { width: 80px; padding: 6px 10px; border: 1px solid #d0bc60; border-radius: 6px; font-size: 14px; }
+  .age-blocked { display: none; background: #FCEBEB; border: 1px solid #F09595; border-radius: 10px; padding: 1rem 1.25rem; color: #501313; font-size: 14px; text-align: center; margin-bottom: 1rem; }
+
+  /* ── CONFIDENCIALIDADE ── */
+  .conf-banner {
+    background: #eaf3ff;
+    border-left: 4px solid #2a4d8f;
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin-bottom: 1.25rem;
+    font-size: 13px;
+    color: #1a2e5a;
+    line-height: 1.6;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .conf-banner svg { flex-shrink: 0; margin-top: 2px; }
+
+
+  /* ── SHARED STANDARD ELEMENTS ── */
+  .site-topbar {
+    background: #fff;
+    border-bottom: 1px solid #e0ddd5;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .site-topbar img { height: 38px; width: auto; }
+  .site-topbar-text { display: flex; flex-direction: column; gap: 1px; }
+  .site-topbar-name { font-size: 13px; font-weight: 700; letter-spacing: 0.03em; }
+  .site-topbar-sub { font-size: 11px; color: #888; }
+  .site-topbar-back { margin-left: auto; font-size: 12px; color: #888; text-decoration: none; display: flex; align-items: center; gap: 4px; }
+  .site-topbar-back:hover { color: #333; }
+
+  .site-topbar-name { color: #2a4d8f; }
+
 </style>
 </head>
 <body>
@@ -485,6 +556,17 @@
   <div class="progress-bar-fill" id="progressBar"></div>
 </div>
 
+<div class="site-topbar">
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAABCGlDQ1BJQ0MgUHJvZmlsZQAAeJxjYGA8wQAELAYMDLl5JUVB7k4KEZFRCuwPGBiBEAwSk4sLGHADoKpv1yBqL+viUYcLcKakFicD6Q9ArFIEtBxopAiQLZIOYWuA2EkQtg2IXV5SUAJkB4DYRSFBzkB2CpCtkY7ETkJiJxcUgdT3ANk2uTmlyQh3M/Ck5oUGA2kOIJZhKGYIYnBncAL5H6IkfxEDg8VXBgbmCQixpJkMDNtbGRgkbiHEVBYwMPC3MDBsO48QQ4RJQWJRIliIBYiZ0tIYGD4tZ2DgjWRgEL7AwMAVDQsIHG5TALvNnSEfCNMZchhSgSKeDHkMyQx6QJYRgwGDIYMZAKbWPz9HbOBQAAARpklEQVR4nO1cS1MbxxbunrdeIDyyUMAQCI4fpEiqkvLCySKb/Oxs4soucaocF6lQMQ4YYyRMhN7SaEbTd/F5Th31CMG9JdlOXZ0FJY16eqa/OY/vnNODDMPQMAwppZQyjmMhBD6LhQghhDDiOAYuC5koFtCBEtFRpZRS6sPd1UckhvZ9YV+aWIZhkPoYxju8FhiRWGmVWRgXF4u7G3yO4xioGYaxAEv3QSqRD3I3H6FYWvySUpqmiQ8LmIQQRtoHaZD9n4tuYmLhpMdlAkAL4bIA6BpZAHSNLAC6RhYAXSMLgK6RBUDXyAKga2QB0DWyAOgaWQB0jSwAukas93Yl5MDX1gl4qvw/FBWUUrMtRcwYINwcFom/qHNTHY56cPiqtVJEqpYwsSKMEycej+MYVXY+Jy6XvhaOT+8Gvm8Tm1UtBe08Plu6EIrFj0aja0dOkZlpUPr5TBzAS7oTzYEevjYnPWeRrFwktT0+M52ilCJooLl0Uc3Yp9dO5+iDtEpu2qz42sQ4NFzSD5xm046Q0BHgwo/f0BWSzAUgusX0cbrLm3hr7pXShXPteBrfq5RRw3GiRyOZexRLay8dIS1Iu+fp8PG1aSfyyTXffBXc0y83M4DSy+M+kh/HV9M0NTPhayPnwm1TpGKNUiqKIr75gqwYMxBAFLAwj2VZuAGMFFdHjzlq0Gg0CsNwOBxGUYQjHCC+VO4dhBCGYZimaZqmbdumaWoxmz7HcTwcDvn8Ytx/0+QEFgAyDMN1Xdu2bdu+dhWz1yB6IKPRaDgc9vv9IAjQrcVqedxNGz/Wg7tXSuGDNobQGQwGvV4viiKlFDQC4X80GtHMtPmAsLMsC8cJoA8TxQijIAhGo5FpmlBssgugpjlXyVreGE/HuUnGcRxFURAEQRCEYSiltG0bKycmQafgeQA4DLAsy3GcOI5p/qtk7mGeNmgZhmFZFtZgmiYeu2C2wN0HWZbmaHl8xJohmNl1XWgogOAsCfbOwYJ8SICMRKD8rut6ngd7If4mxoMRkTo4ICx7Ij8CjhBAk8lkPM8zTZMcDXfwYRgGQSCljKII6N+QCs2FSQvG08jjep6XzWYBkEY9oGKaaWAZmn6JROP4zIZhOI7juq7rutAIAohOhGmPRiP8NIWCzwsgEu1iZDKWZdm27TjOxFNoMP8shEinUYIZGpZKvowA1TSUU6GrGMNVMksNUmxvkWD5ZJrOkQvQbpdrPmYLw5AiILQAKsDHwPvC8cPBD4dDeBw6C4QDnMCyLE6dpsM0F6LIQSEgOHCIPvDT3AHTGPIdMApyTKZpOo7jOA5NBZdsWe92giG69fv9wWAAvGB0URQBIMB98729swFIpQg+IULhnALTaDQKgqDT6SA8E28iHEViPiJ5vFEURVFkGEY2mwXN49SGq5iUUiOo0CnSWf4YSOTVCf0sNYiurW0tJudKXxFTgiCAbxLjRicYuwNMMDTDMGBH5EoIU9IvaBB0k3scwaIq4mOaXswXIC4TL8bvVSQqQ2pCNqJ5ULIF+Hg4FBzhKQV0h2bmCssDFl3LcRzLskjB4a0m7smcFw+aorRaXENsptRRMXIEHwSNEOM6yBVNUxbbtj3PI6XQHD+wgBLRVa66VTErgPjzoYMT3TbHCHkW+Au0Iw0rAOr1er1eD6+V8Bl43kdRjLSDRsrxhANKRMBxQpRe2vvramiC24Ieua5LgSktiFP9fp97cc4Skf3Sr3BqaVFJOsb5hEwlg5rMi0mLFEPTRsasVDSds1HqwCMXsi0tCE6P3HK8Ajvlzrl8AA0ifY7HBZYCYxGJ74jjGPUAIQQcOYonIHvD4RBECZRyMBhQdItZhsyTLx68uGXNPYqllYWivkq1E8hAOFij0WgwGAwGgyAIlFJYGEiTSso9RIiwToroKH2MRiOUh0i/4OMymYzjODwO0E0qVmB7r1FsupimieCFQCZZzt3r9fr9vkpKZVATIQTIIY9oYryJGIZhGIZgiaPRCM/AdV0ppeM4U+KUeD8FM85fNC4jUlHMsqxsNgvPgmdLnIW7EspFKaXQ/LRILIXjRTyIjCt9q2oSZf+IohgnPmRokmXkVMGAE4GvgetBFCdep3FL4tm4BDSU82ZKOPB1eowXMweIP0PB3JAY9008JIlECzj9AxCu62KFQgj4aVTdcByJBVcrnp1wf0e0iC6hrs4t5gvQDUWO56J0ULAlEUCmacK/wHN7nofKJM7iDIicN/0EOLS6Krem6b5JzNUHiatj58TjdJASEQjXL25TNJjYjbZafhZHn1MhGmCM1xhpkvl2NeJJ7R3cNyUHdNNRFCFrp2H8jrUkHnFKpNrcNExbv2BmxamQBgcnrjg+Yx5Ey6NlcO/AFbvb7aKmJZMSdZzUDwkFGqx5YnJhE++Blm2w9ixclRwvWopUFAOHgP1i2Hva3SGSNjHcQRiGnU6n2+2KpKBFCGJ5cUqANf5qF9Ismp4/V9v0KdyL84O4CsXWuewwo1vk0QoUDl9RLRsOh0bSAiNDmwgBqae2G4rQFOx5EDocDuITpClxUpDVFIr0CD/NV4MmKjMESYBMKg+QMAy1GXCjjuPkcrk4jnlhBGOIWMpxSoVfNdsUjCVS25Ynw9Q1EjM3Mc3+JSvW0d1Td9h1XaUU/nIOjVoEPwshP5vNZjIZOd505RCo8T1kghkpncW9JE8DUUihvQycTM0SIE0U62fQUm3bNpIKqW3bZE0q6UYgEUWqSfcKTqxNzrGAdtDmBeRiKmnAa8yI3x4vHijWa4S8m2RO6GhIabFZJNkGHwMTo7Y9ocCFKkEi1UpDqOp2u81mMwgCy7IKhQLvU2Ja1Em63W673e73+1JK0E6Aha4J0HnXRJsHKHwBWBUVa6gSjAdO/WWZpJfEhsniuEcg3sBdMj6HYdhqtarV6unpaaPREEJks9lsNlssFldWVpaXlzOZTCaTEUIMh8Ozs7OTk5NGo6GUymQyeCqWZfm+X6lUVldXqcYw476YGA9k9DSQSeEv9AUs2UkEwBE6CCV4hvDc5L8m8qA4jnu9XrVaPTg4+OOPPy4uLkTiX/L5/M7Ozu7u7t27dzc2NoQQ/X7/+Pj4+fPn5+fnaDri9CiKbt26tbe39+23325ubsI8Z59qCPZUyRFCY+EjoMxwQ57nafyNNAVKB1jxeIEjAOVeli7R7/er1eqLFy/CMNzc3LRtezgcnp+fw8ENBgPTNFdXV6WUnU7n7Ozs/Pw8m82Wy2XHcWzbPjs7e/HiRRRFq6urvu/ncjnHcWbW1dDofHoAT3b4GFIHHrkJIMMwgiCAeZqmmclkcrkcj2XE1FE5jKKo0+mUy+UffvhhY2OjXq8/e/asWq2enJy8ffs2juPvv/8e6a4QwrKsO3fufPfdd6urq3Ec//bbb0+ePKnVai9fvtze3sZWi7mEeYhi1UywHrgYcttU9KHjFPt4u51m455bc3lSSugjWNLy8vKDBw/W19eFELlc7unTp0+fPj05OfF9/5tvvvF93/O8TCZTLBa3t7cfP37sui4m2d/fPzo6uri4aDabq6urYq41aapCgOlls1loMjEdg7VuEIPUeDcZqxVJyIMb8jyPTExDUCQEAnEKx33fL5fLmUxmMBhcXl52Op2lpSXoI98HIYTo9XoqqYXPnQdxyGi1tMNs4niidiIpWmezWXxQShFY6fyAhEAfjUa0OcLzvFKpdPv27ZOTE/gp2tcQBMHx8fGTJ08qlYpSan9/PwiCcrn86aefFotFqPBccjExTt60nGPiwhSrjZBJZjIZ2stDAVFMCpokRJS49mUymUKh4HmekexgBD9sNBr1ev3o6Aj0p9PpxHF879693d3d27dv49Jz2WFGnw3DwL5BhEyVdH7Tp1BN3kj2elIKwrNt4+r/+UQo8312Itn0Sw0iI2m3EdZBEDQajbdv3zqOs7e3t7u7u729DS8+e4DUeB3HNM18Pk+az6MVT8FpbfC1Msnske7zVrJkosariOTgZbKliFLCVqtVr9d7vZ6UEukuoF9eXl5fX//ss89qtdrPP/8cBMEnn3yysbEBdPDY5phqABdcDDd6laGRPQId2ujNE07BtiDRVTRbI+2j7eeDweDo6Ojg4ODs7MwwjFu3biH/gIY6jnPnzp3Hjx+3Wq12u/3XX38FQVCv15vNZrFYlPPI5kVSABPM1iQrdGpUiBNLhCq+y9lkG101dCgT5skd9kGg7aGUCsPw+Pj4119/3d/f7/V6Gxsbn3/+ebFYFEIgDmIro+u6W1tbX375Zb1e//vvv23bLhQKhUIBC5m9BmkA4Tmn+aF2hEBEM0dM2viED9yj8wmxNbHf73e73dPT019++aVarb569er58+eNRqNUKn311Vf379/3PO/y8hIjm81mo9EYDAa3bt16+PDh4eHhTz/91G63K5UKuNIsk9WJy554ZPrpJttjnx7AFUcLjkEQIEEPw/Di4uLHH3/0fR/OuFKpPHjw4NGjRxsbG4ZhNBoNUB48S+R6a2trd+/e/f333y8vL9+8efP69eulpSXTND/Y/iCSiYnuxGEkaU8EZPP5/ObmZr/fv7i4iOM4m80WCoWVlZVKpbKzs7O1tYWdZ5ZllUqlhw8fttttJKUomO3s7Dx69KhWq5VKJeJuMooiHheuSqZuuM6bnEtkR4xHvSmMKWbNHBqjkgI2/Hocx4PBoNvtdrtd5LfEp1zXzefzuVxOJCl+EAT463neysoKIkm/36/Vat1u17btpaWlXC5nWdZHARB352kXLsYti5fZyKPTbtnp11VXtDq0m8fIdzTq+qX/NzIdpjTHI8qj/aRFwLRBCValJ5J51ZsvE6cigRryqi5Xlw/vg/jdTBljJu8hcJMECSCKiORLju+D4DNIVmxSydZfDFBJs1dKCSaJ1tB89yjS57RmxakXJ9Nzan5HJk0rSiagMrw2RJOTexJCoHTLdYSyEExLJkw1X5rqA2sQBy4NKCRm7emJHiR9EKScvg6HQ8XSQMW64WK8QURVFGSFcoaNw/TyJnqciWOude3UleWv+V4V8tLiOA5SM9pXS9oUsxeKqBRDWxxnCdB/K/QwxXjiytfMx/CDdJzHXJRou91ur9eL45h29nmet7S0ZFkWDA3tXO0SqDeQQgnWWZzX61DXjic4NI7Df4UYbJMGJweaUQRBcHFxcXp6enp62u12gY5pmuvr61988UWpVBKTlE5KyZuLNC0N+/BRjGQKBeNVITHOG7knbrVa//zzT7PZBI1G4VVKWSwWHccpFAphGNbr9U6nE0WRbdu5XA6FYGzFht5B9VCf7fV67+9tH00mMh3Od7TB2k9SSnpdh06En1pdXa1UKmtra8Ph8OXLl5eXl9VqNZ/Pe57X6XSePXt2cHAQhmG5XEb+kc1m6/V6tVq1LGtrawvNxVqtdnh4+Pbt249Cg27oa7kQ0yUoYVDoC+3s7JRKpTAMa7Xa5eWlEKLb7b569arVajUaDcMwMpmM67rITgzDQEs2l8ttb28rper1+uvXry8vL4Mg+CgAuomkdUqrTxNvjOMYOX2tVqtWq1EUoTV4eHjY6XR839/d3S0Wi+i4KaVojzEStyAI/vzzzzdv3hSLxc3NzX8HQESgzeTfyafdOahAv99HFKvX6+12OwzDlZWVcrlsWVa1Wm21WgjqcEBxHKMrCYzg0TqdztHRURAE9+/f39ra+hcAJFmNnbw1JzL4gIJZs9kcDofNZhO2tra2Vi6X4Yz39vYODw/RvF9ZWbl///69e/fy+Tz+wQhJp9Npt9tI6AuFwr8AIEiavGifjeQNvTiOXdctFAqlUsn3/UKhgCay7/tSymaz2Wq1ms3m6emp67rlchkZBqUdcP/09V8AkGJbm3huGY+/HYZn7vs+zGptbW15eZlSVsTB5eXlr7/+Gj37drt9cnLS6XQqlQqqRehHD4dDlLTfvXT0/hf8v4lWx1Cs8Y8jpmlms9l8Pj8ajW7fvr2+vi6lDIKg1+vZtk37e33f933//Pz84ODg/Pw8DEPf9+m1UCqw4Z/KRFH0H7Cc82Yo1OszAAAAAElFTkSuQmCC" alt="PerissinottoPsi">
+  <div class="site-topbar-text">
+    <span class="site-topbar-name">PerissinottoPsi</span>
+    <span class="site-topbar-sub">Observatório de Pesquisas em Psicologia · UNIP-Goiânia</span>
+  </div>
+  <a href="index.html" class="site-topbar-back">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    Todas as pesquisas
+  </a>
+</div>
 <div class="container">
 
   <!-- ══════════════ SCREEN 0: WELCOME ══════════════ -->
@@ -492,27 +574,55 @@
     <div class="welcome-hero">
       <div class="eye-icon">🧠</div>
       <h2>Personalidade &amp; Vida Contemporânea</h2>
-      <p>Uma pesquisa científica do Curso de Psicologia da UNIP-Goiânia sobre traços de personalidade e comportamentos digitais.</p>
+      <p>Uma pesquisa científica do Curso de Psicologia da UNIP-Goiânia sobre traços de personalidade, comportamentos digitais e saúde psicológica.</p>
     </div>
-    <div class="info-cards">
-      <div class="info-card">
-        <div class="ic-num">25–30</div>
-        <div class="ic-label">minutos estimados</div>
-      </div>
-      <div class="info-card">
-        <div class="ic-num">100%</div>
-        <div class="ic-label">anônimo</div>
-      </div>
-      <div class="info-card">
-        <div class="ic-num">+18</div>
-        <div class="ic-label">anos de idade</div>
-      </div>
-      <div class="info-card">
-        <div class="ic-num">7</div>
-        <div class="ic-label">escalas com feedback</div>
+
+    <div class="conf-banner">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2a4d8f" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <div><strong>Confidencialidade e tempo estimado</strong> — Suas respostas são completamente anônimas e serão utilizadas exclusivamente para fins científicos, conforme a LGPD (Lei nº 13.709/2018). O tempo estimado de participação é de <strong>25 a 30 minutos</strong>.</div>
+    </div>
+
+    <div class="age-gate" id="age-gate-box">
+      <strong>Critério de elegibilidade</strong>
+      Esta pesquisa é destinada a pessoas com 18 anos ou mais.
+      <div class="age-gate-row">
+        <label style="font-size:13px;">Sua idade:</label>
+        <input type="number" id="ageGate" min="1" max="120" placeholder="ex: 28" oninput="checkAgeGate()">
+        <span style="font-size:13px;">anos</span>
       </div>
     </div>
-    <button class="btn btn-primary" onclick="goTo(1)">Começar pesquisa →</button>
+    <div class="age-blocked" id="age-blocked-msg">
+      <strong>Participação não permitida.</strong> Esta pesquisa é restrita a participantes com 18 anos ou mais. Agradecemos seu interesse!
+    </div>
+
+    <div id="research-cards" style="display:none;">
+      <p style="font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--mid);margin-bottom:12px;">Selecione a pesquisa que deseja participar</p>
+
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px;">
+
+        <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.25rem;border-left:4px solid #c0392b;">
+          <div style="font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#c0392b;margin-bottom:6px;">Personalidade · Mídia</div>
+          <div style="font-weight:600;font-size:15px;margin-bottom:6px;line-height:1.35;">Entre o Fascínio e o Medo: os efeitos do consumo de true crime no cotidiano</div>
+          <div style="font-size:12px;color:var(--mid);margin-bottom:10px;">Brenda Maria de O. Vargas · Luiza de O. Vasconcelos · Virgínia Brondani de Freitas</div>
+          <button class="btn btn-primary" style="background:#c0392b;font-size:13px;padding:8px 18px;" onclick="startSurvey('true-crime')">Participar →</button>
+        </div>
+
+        <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.25rem;border-left:4px solid #8a2a3a;">
+          <div style="font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#8a2a3a;margin-bottom:6px;">Personalidade · Digital</div>
+          <div style="font-weight:600;font-size:15px;margin-bottom:6px;line-height:1.35;">A Influência das Redes Sociais na Autoimagem</div>
+          <div style="font-size:12px;color:var(--mid);margin-bottom:10px;">Bruna Vitor · Bárbara Monteiro · Gabriella Ribeiro · Julyano Mauro</div>
+          <button class="btn btn-primary" style="background:#8a2a3a;font-size:13px;padding:8px 18px;" onclick="startSurvey('redes-sociais')">Participar →</button>
+        </div>
+
+        <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:1.25rem;border-left:4px solid #2a4d8f;">
+          <div style="font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#2a4d8f;margin-bottom:6px;">Personalidade · Clínica</div>
+          <div style="font-weight:600;font-size:15px;margin-bottom:6px;line-height:1.35;">Traços da Dark Tetrad e Autoeficácia para Situações de Vitimização</div>
+          <div style="font-size:12px;color:var(--mid);margin-bottom:10px;">Amanda R. Ferreira · Beatriz V. Lucena · Luciana R. da Silva</div>
+          <button class="btn btn-primary" style="font-size:13px;padding:8px 18px;" onclick="startSurvey('autoeficacia')">Participar →</button>
+        </div>
+
+      </div>
+    </div>
   </div>
 
   <!-- ══════════════ SCREEN 1: TCLE ══════════════ -->
@@ -1872,6 +1982,28 @@ function newResponse() {
 document.addEventListener('DOMContentLoaded', () => {
   initScales();
 });
+
+// ── AGE GATE ──
+let selectedSurvey = null;
+
+function checkAgeGate() {
+  const age = parseInt(document.getElementById('ageGate').value);
+  const cards = document.getElementById('research-cards');
+  const blocked = document.getElementById('age-blocked-msg');
+  if (isNaN(age) || age < 1) { cards.style.display='none'; blocked.style.display='none'; return; }
+  if (age < 18) { cards.style.display='none'; blocked.style.display='block'; }
+  else { cards.style.display='block'; blocked.style.display='none'; }
+}
+
+function startSurvey(type) {
+  selectedSurvey = type;
+  // Pass age to demographics field
+  const age = document.getElementById('ageGate').value;
+  const idadeField = document.getElementById('idade');
+  if (idadeField && age) idadeField.value = age;
+  goTo(1);
+}
+
 </script>
 </body>
 </html>
