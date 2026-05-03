@@ -26,7 +26,7 @@ header .inst { font-size: 12px; letter-spacing: .08em; text-transform: uppercase
 header h1 { font-size: clamp(1.1rem,3vw,1.55rem); font-weight: 600; max-width: 700px; margin: 0 auto .75rem; line-height: 1.35; }
 header p { font-size: 13px; opacity: .75; max-width: 560px; margin: 0 auto; }
 
-.progress-wrap { background:#fff; border-bottom:1px solid var(--border); padding:.75rem 1.5rem; position:sticky; top:0; z-index:100; display:flex; align-items:center; gap:12px; }
+.progress-wrap { background:#fff; border-bottom:1px solid var(--border); padding:.75rem 1.5rem; position:sticky; top:62px; z-index:100; display:flex; align-items:center; gap:12px; }
 .progress-bar-bg { flex:1; height:6px; background:#e0e0e0; border-radius:99px; overflow:hidden; }
 .progress-bar-fill { height:100%; background:var(--primary); border-radius:99px; transition:width .4s ease; width:0%; }
 .progress-label { font-size:12px; color:var(--text-muted); white-space:nowrap; }
@@ -131,9 +131,41 @@ audio { width:100%; border-radius:8px; }
 #success-screen p { font-size:14px; color:var(--text-muted); max-width:440px; margin:0 auto; }
 
 @media(max-width:520px){ header{padding:2rem 1rem 1.5rem} .question,.open-card{padding:1.2rem 1rem} }
+
+  /* ── SHARED STANDARD ELEMENTS ── */
+  .site-topbar {
+    background: #fff;
+    border-bottom: 1px solid #e0ddd5;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .site-topbar img { height: 38px; width: auto; }
+  .site-topbar-text { display: flex; flex-direction: column; gap: 1px; }
+  .site-topbar-name { font-size: 13px; font-weight: 700; color: #0e7a6b; letter-spacing: 0.03em; }
+  .site-topbar-sub { font-size: 11px; color: #888; }
+  .site-topbar-back { margin-left: auto; font-size: 12px; color: #888; text-decoration: none; display: flex; align-items: center; gap: 4px; }
+  .site-topbar-back:hover { color: #333; }
+
 </style>
 </head>
 <body>
+<div class="site-topbar">
+  <img src="data:image/png;base64,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" alt="PerissinottoPsi">
+  <div class="site-topbar-text">
+    <span class="site-topbar-name">PerissinottoPsi</span>
+    <span class="site-topbar-sub">Observatório de Pesquisas em Psicologia · UNIP-Goiânia</span>
+  </div>
+  <a href="index.html" class="site-topbar-back">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    Todas as pesquisas
+  </a>
+</div>
 
 <header>
   <div class="inst">UNIP – Universidade Paulista · Graduação em Psicologia</div>
@@ -160,16 +192,15 @@ audio { width:100%; border-radius:8px; }
     Ler o TCLE completo (PDF)
   </a>
 
-  <div class="question" id="q-tcle" data-req="radio" style="margin-bottom:0;box-shadow:none;">
+  <div class="question" id="q-tcle" style="margin-bottom:0;box-shadow:none;">
     <div class="question-header" style="margin-bottom:.75rem;">
       <div class="q-num">!</div>
-      <div><div class="q-text">Após ler o Termo de Consentimento, você concorda em participar?<span class="req">*</span></div></div>
+      <div><div class="q-text">Após ler o Termo de Consentimento, você concorda em participar?</div></div>
     </div>
     <div class="options">
       <label class="option-label"><input type="radio" name="tcle" value="sim" onchange="onTCLE()"> Concordo em participar</label>
       <label class="option-label"><input type="radio" name="tcle" value="nao" onchange="onTCLE()"> Não concordo em participar</label>
     </div>
-    <div class="error-msg">Selecione uma opção para continuar.</div>
   </div>
 </div>
 
@@ -192,16 +223,15 @@ audio { width:100%; border-radius:8px; }
   Durante a pandemia de COVID-19 (aprox. 2020–2022), muitos desses eventos foram cancelados, adiados ou realizados de forma diferente, devido às restrições sanitárias.
 </div>
 
-<div class="question" id="q-filtro" data-req="radio">
+<div class="question" id="q-filtro">
   <div class="question-header">
     <div class="q-num">F</div>
-    <div><div class="q-text">Durante a pandemia, algum rito de passagem importante em sua vida foi cancelado, adiado ou realizado de forma diferente do planejado?<span class="req">*</span></div></div>
+    <div><div class="q-text">Durante a pandemia, algum rito de passagem importante em sua vida foi cancelado, adiado ou realizado de forma diferente do planejado?</div></div>
   </div>
   <div class="options">
     <label class="option-label"><input type="radio" name="filtro" value="sim" onchange="onFiltro()"> Sim</label>
     <label class="option-label"><input type="radio" name="filtro" value="nao" onchange="onFiltro()"> Não</label>
   </div>
-  <div class="error-msg">Selecione uma opção para continuar.</div>
 </div>
 
 <div class="stopper" id="stop-filtro">Agradecemos sua participação! Como você não vivenciou a interrupção de rituais durante a pandemia, o questionário foi encerrado aqui. Sua resposta já é uma contribuição importante.</div>
@@ -211,35 +241,32 @@ audio { width:100%; border-radius:8px; }
 <p class="section-label" style="margin-top:1.5rem;">Seção 3 — Dados sociodemográficos</p>
 
 <div class="question" id="q1">
-  <div class="question-header"><div class="q-num">1</div><div><div class="q-text">Idade<span class="req">*</span></div></div></div>
+  <div class="question-header"><div class="q-num">1</div><div><div class="q-text">Idade</div></div></div>
   <input type="number" id="q1v" min="18" max="120" placeholder="Digite sua idade" style="max-width:160px;" oninput="prog()">
-  <div class="error-msg">Informe sua idade.</div>
 </div>
 
-<div class="question" id="q2" data-req="radio">
-  <div class="question-header"><div class="q-num">2</div><div><div class="q-text">Gênero<span class="req">*</span></div></div></div>
+<div class="question" id="q2">
+  <div class="question-header"><div class="q-num">2</div><div><div class="q-text">Gênero</div></div></div>
   <div class="options">
     <label class="option-label"><input type="radio" name="q2" value="Feminino"> Feminino</label>
     <label class="option-label"><input type="radio" name="q2" value="Masculino"> Masculino</label>
     <label class="option-label"><input type="radio" name="q2" value="outro"> Outro: <input class="inline-input" type="text" placeholder="Especifique"></label>
     <label class="option-label"><input type="radio" name="q2" value="Prefiro não responder"> Prefiro não responder</label>
   </div>
-  <div class="error-msg">Selecione uma opção.</div>
 </div>
 
-<div class="question" id="q3" data-req="radio">
-  <div class="question-header"><div class="q-num">3</div><div><div class="q-text">Estado civil<span class="req">*</span></div></div></div>
+<div class="question" id="q3">
+  <div class="question-header"><div class="q-num">3</div><div><div class="q-text">Estado civil</div></div></div>
   <div class="options">
     <label class="option-label"><input type="radio" name="q3" value="Solteiro(a)"> Solteiro(a)</label>
     <label class="option-label"><input type="radio" name="q3" value="Casado(a) / União estável"> Casado(a) / União estável</label>
     <label class="option-label"><input type="radio" name="q3" value="Divorciado(a)"> Divorciado(a)</label>
     <label class="option-label"><input type="radio" name="q3" value="Viúvo(a)"> Viúvo(a)</label>
   </div>
-  <div class="error-msg">Selecione uma opção.</div>
 </div>
 
-<div class="question" id="q4" data-req="radio">
-  <div class="question-header"><div class="q-num">4</div><div><div class="q-text">Escolaridade<span class="req">*</span></div></div></div>
+<div class="question" id="q4">
+  <div class="question-header"><div class="q-num">4</div><div><div class="q-text">Escolaridade</div></div></div>
   <div class="options">
     <label class="option-label"><input type="radio" name="q4" value="Ensino fundamental"> Ensino fundamental</label>
     <label class="option-label"><input type="radio" name="q4" value="Ensino médio"> Ensino médio</label>
@@ -247,20 +274,18 @@ audio { width:100%; border-radius:8px; }
     <label class="option-label"><input type="radio" name="q4" value="Ensino superior completo"> Ensino superior completo</label>
     <label class="option-label"><input type="radio" name="q4" value="Pós-graduação"> Pós-graduação</label>
   </div>
-  <div class="error-msg">Selecione uma opção.</div>
 </div>
 
 <div class="question" id="q5">
-  <div class="question-header"><div class="q-num">5</div><div><div class="q-text">Cidade e estado onde reside<span class="req">*</span></div></div></div>
+  <div class="question-header"><div class="q-num">5</div><div><div class="q-text">Cidade e estado onde reside</div></div></div>
   <input type="text" id="q5v" placeholder="Ex: Goiânia, GO" oninput="prog()">
-  <div class="error-msg">Informe sua cidade e estado.</div>
 </div>
 
 <!-- ═══ SEÇÃO 4: IDENTIFICAÇÃO DO RITO ═══ -->
 <p class="section-label" style="margin-top:1.5rem;">Seção 4 — Identificação do rito de passagem</p>
 
-<div class="question" id="q6" data-req="checkbox">
-  <div class="question-header"><div class="q-num">6</div><div><div class="q-text">Durante a pandemia, quais ritos de passagem foram afetados em sua vida?<span class="req">*</span></div><div class="q-hint">Pode marcar mais de uma opção</div></div></div>
+<div class="question" id="q6">
+  <div class="question-header"><div class="q-num">6</div><div><div class="q-text">Durante a pandemia, quais ritos de passagem foram afetados em sua vida?</div><div class="q-hint">Pode marcar mais de uma opção</div></div></div>
   <div class="options">
     <label class="option-label"><input type="checkbox" name="q6" value="Casamento"> Casamento</label>
     <label class="option-label"><input type="checkbox" name="q6" value="Aniversário"> Aniversário</label>
@@ -268,11 +293,10 @@ audio { width:100%; border-radius:8px; }
     <label class="option-label"><input type="checkbox" name="q6" value="Ritual fúnebre"> Ritual fúnebre</label>
     <label class="option-label"><input type="checkbox" name="q6" value="outro"> Outro: <input class="inline-input" type="text" placeholder="Especifique"></label>
   </div>
-  <div class="error-msg">Selecione ao menos uma opção.</div>
 </div>
 
-<div class="question" id="q7" data-req="radio">
-  <div class="question-header"><div class="q-num">7</div><div><div class="q-text">Qual desses ritos teve <strong>maior impacto</strong> para você?<span class="req">*</span></div></div></div>
+<div class="question" id="q7">
+  <div class="question-header"><div class="q-num">7</div><div><div class="q-text">Qual desses ritos teve <strong>maior impacto</strong> para você?</div></div></div>
   <div class="options">
     <label class="option-label"><input type="radio" name="q7" value="Casamento"> Casamento</label>
     <label class="option-label"><input type="radio" name="q7" value="Aniversário"> Aniversário</label>
@@ -281,25 +305,23 @@ audio { width:100%; border-radius:8px; }
     <label class="option-label"><input type="radio" name="q7" value="outro"> Outro: <input class="inline-input" type="text" placeholder="Especifique"></label>
   </div>
   <div style="margin-top:.75rem;padding:10px 12px;background:var(--primary-light);border-radius:6px;font-size:13px;color:#085041;">Nas próximas perguntas, responda pensando principalmente nesse rito.</div>
-  <div class="error-msg">Selecione uma opção.</div>
 </div>
 
 <!-- ═══ SEÇÃO 5: CARACTERÍSTICAS ═══ -->
 <p class="section-label" style="margin-top:1.5rem;">Seção 5 — Características da experiência</p>
 
-<div class="question" id="q8" data-req="radio">
-  <div class="question-header"><div class="q-num">8</div><div><div class="q-text">De que forma esse rito foi afetado?<span class="req">*</span></div></div></div>
+<div class="question" id="q8">
+  <div class="question-header"><div class="q-num">8</div><div><div class="q-text">De que forma esse rito foi afetado?</div></div></div>
   <div class="options">
     <label class="option-label"><input type="radio" name="q8" value="Foi cancelado"> Foi cancelado</label>
     <label class="option-label"><input type="radio" name="q8" value="Foi adiado"> Foi adiado</label>
     <label class="option-label"><input type="radio" name="q8" value="Realizado de forma adaptada (online ou com poucas pessoas)"> Realizado de forma adaptada (online ou com poucas pessoas)</label>
     <label class="option-label"><input type="radio" name="q8" value="outro"> Outro: <input class="inline-input" type="text" placeholder="Especifique"></label>
   </div>
-  <div class="error-msg">Selecione uma opção.</div>
 </div>
 
-<div class="question" id="q9" data-req="radio">
-  <div class="question-header"><div class="q-num">9</div><div><div class="q-text">Quem tomou a decisão de modificar ou cancelar o evento?<span class="req">*</span></div></div></div>
+<div class="question" id="q9">
+  <div class="question-header"><div class="q-num">9</div><div><div class="q-text">Quem tomou a decisão de modificar ou cancelar o evento?</div></div></div>
   <div class="options">
     <label class="option-label"><input type="radio" name="q9" value="Eu"> Eu</label>
     <label class="option-label"><input type="radio" name="q9" value="Família"> Família</label>
@@ -307,11 +329,10 @@ audio { width:100%; border-radius:8px; }
     <label class="option-label"><input type="radio" name="q9" value="Circunstâncias externas (restrições sanitárias)"> Circunstâncias externas (restrições sanitárias)</label>
     <label class="option-label"><input type="radio" name="q9" value="outro"> Outro: <input class="inline-input" type="text" placeholder="Especifique"></label>
   </div>
-  <div class="error-msg">Selecione uma opção.</div>
 </div>
 
 <div class="question" id="q10">
-  <div class="question-header"><div class="q-num">10</div><div><div class="q-text">Em uma escala de 0 a 10, quanto esse evento era importante para você?<span class="req">*</span></div></div></div>
+  <div class="question-header"><div class="q-num">10</div><div><div class="q-text">Em uma escala de 0 a 10, quanto esse evento era importante para você?</div></div></div>
   <div class="scale-wrap">
     <div class="scale-row">
       <input type="range" id="q10v" min="0" max="10" value="5" oninput="document.getElementById('q10n').textContent=this.value;prog()">
@@ -360,8 +381,8 @@ audio { width:100%; border-radius:8px; }
   <div class="audio-panel" id="ap-q13"></div>
 </div>
 
-<div class="question" id="q14" data-req="radio">
-  <div class="question-header"><div class="q-num">14</div><div><div class="q-text">Você percebeu algum impacto emocional decorrente dessa experiência?<span class="req">*</span></div></div></div>
+<div class="question" id="q14">
+  <div class="question-header"><div class="q-num">14</div><div><div class="q-text">Você percebeu algum impacto emocional decorrente dessa experiência?</div></div></div>
   <div class="options">
     <label class="option-label"><input type="radio" name="q14" value="Sim" onchange="showDesc('ie',true)"> Sim</label>
     <label class="option-label"><input type="radio" name="q14" value="Não" onchange="showDesc('ie',false)"> Não</label>
@@ -375,7 +396,6 @@ audio { width:100%; border-radius:8px; }
     <div id="tp-q14d"><textarea id="tv-q14d" placeholder="Descreva o impacto emocional..." oninput="cc('q14d');prog()"></textarea><div class="char-count" id="cc-q14d">0 caracteres</div></div>
     <div class="audio-panel" id="ap-q14d"></div>
   </div>
-  <div class="error-msg">Selecione uma opção.</div>
 </div>
 
 <!-- Q15 -->
@@ -404,8 +424,8 @@ audio { width:100%; border-radius:8px; }
   </div>
 </div>
 
-<div class="question" id="q17" data-req="radio">
-  <div class="question-header"><div class="q-num">17</div><div><div class="q-text">Posteriormente, você conseguiu realizar esse rito de alguma forma?<span class="req">*</span></div></div></div>
+<div class="question" id="q17">
+  <div class="question-header"><div class="q-num">17</div><div><div class="q-text">Posteriormente, você conseguiu realizar esse rito de alguma forma?</div></div></div>
   <div class="options">
     <label class="option-label"><input type="radio" name="q17" value="Sim" onchange="showDesc('rd',true)"> Sim</label>
     <label class="option-label"><input type="radio" name="q17" value="Não" onchange="showDesc('rd',false)"> Não</label>
@@ -418,7 +438,6 @@ audio { width:100%; border-radius:8px; }
     <div id="tp-q17d"><textarea id="tv-q17d" placeholder="Se sim, descreva como foi..." oninput="cc('q17d');prog()"></textarea><div class="char-count" id="cc-q17d">0 caracteres</div></div>
     <div class="audio-panel" id="ap-q17d"></div>
   </div>
-  <div class="error-msg">Selecione uma opção.</div>
 </div>
 
 <!-- ═══ SEÇÃO 9: RESSIGNIFICAÇÃO ═══ -->
@@ -580,16 +599,41 @@ function stopRec(id) {
   document.getElementById('rs-' + id).innerHTML = '<strong>Gravação concluída.</strong>';
 }
 
+async function transcribeWhisper(id, blob) {
+  const ld = document.getElementById('tl-' + id);
+  const ta = document.getElementById('tr-' + id);
+  ld.classList.add('on');
+  ta.placeholder = 'Transcrevendo com IA...';
+  try {
+    const formData = new FormData();
+    formData.append('file', new File([blob], 'audio.webm', { type: 'audio/webm' }));
+    formData.append('model', 'whisper-1');
+    formData.append('language', 'pt');
+    const res = await fetch('https://whisper-proxy.perissinotto-prof.workers.dev', {
+      method: 'POST',
+      body: formData
+    });
+    const data = await res.json();
+    ld.classList.remove('on');
+    if (data.text) {
+      ta.value = data.text;
+      ta.placeholder = '';
+    } else {
+      ta.placeholder = 'Não foi possível transcrever. Edite o texto manualmente.';
+    }
+  } catch(err) {
+    ld.classList.remove('on');
+    ta.placeholder = 'Erro na transcrição. Edite o texto manualmente.';
+  }
+  prog();
+}
+
 function onStop(id) {
   const s = rec[id];
   s.blob = new Blob(s.chunks, { type: 'audio/webm' });
   document.getElementById('pl-' + id).src = URL.createObjectURL(s.blob);
   document.getElementById('pw-' + id).classList.add('on');
-  if (!s.live && !document.getElementById('tr-' + id).value) {
-    const ld = document.getElementById('tl-' + id);
-    ld.classList.add('on');
-    setTimeout(() => { ld.classList.remove('on'); document.getElementById('tr-' + id).placeholder = 'Transcrição não disponível neste navegador. Edite manualmente ou use "Por escrito".'; }, 1200);
-  }
+  transcribeWhisper(id, s.blob);
   prog();
 }
 
@@ -667,47 +711,15 @@ function prog() {
 
 // ── SUBMIT
 function submit() {
-  let valid = true, firstErr = null;
-
-  function markErr(id, bad) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.classList.toggle('required-error', bad);
-    if (bad && !firstErr) firstErr = el;
-  }
-
-  // TCLE
-  if (!getRadio('tcle')) { markErr('q-tcle', true); valid = false; } else markErr('q-tcle', false);
-  if (!valid) { firstErr.scrollIntoView({ behavior:'smooth', block:'center' }); return; }
+  // Apenas TCLE e filtro são verificados para direcionar o fluxo
   if (getRadio('tcle') === 'nao') return;
-
-  // Filtro
-  if (!getRadio('filtro')) { markErr('q-filtro', true); valid = false; } else markErr('q-filtro', false);
-  if (!valid) { firstErr.scrollIntoView({ behavior:'smooth', block:'center' }); return; }
+  if (!getRadio('tcle')) {
+    document.getElementById('q-tcle').scrollIntoView({ behavior:'smooth', block:'center' }); return;
+  }
   if (getRadio('filtro') === 'nao') return;
-
-  // Required fields
-  const reqs = [
-    { id:'q1', check: () => !!document.getElementById('q1v').value },
-    { id:'q2', check: () => !!getRadio('q2') },
-    { id:'q3', check: () => !!getRadio('q3') },
-    { id:'q4', check: () => !!getRadio('q4') },
-    { id:'q5', check: () => !!document.getElementById('q5v').value.trim() },
-    { id:'q6', check: () => !!document.querySelector('input[name="q6"]:checked') },
-    { id:'q7', check: () => !!getRadio('q7') },
-    { id:'q8', check: () => !!getRadio('q8') },
-    { id:'q9', check: () => !!getRadio('q9') },
-    { id:'q14', check: () => !!getRadio('q14') },
-    { id:'q17', check: () => !!getRadio('q17') },
-  ];
-
-  reqs.forEach(r => {
-    const ok = r.check();
-    markErr(r.id, !ok);
-    if (!ok) valid = false;
-  });
-
-  if (!valid) { firstErr.scrollIntoView({ behavior:'smooth', block:'center' }); return; }
+  if (!getRadio('filtro')) {
+    document.getElementById('q-filtro').scrollIntoView({ behavior:'smooth', block:'center' }); return;
+  }
 
   const data = {
     idade: document.getElementById('q1v').value,
