@@ -1,1 +1,1152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pesquisa – Acesso à Saúde Mental | UNIP</title>
+<style>
+  :root {
+    --primary: #185FA5;
+    --primary-light: #E6F1FB;
+    --primary-mid: #378ADD;
+    --accent: #1D9E75;
+    --accent-light: #E1F5EE;
+    --text: #1a1a1a;
+    --text-muted: #5a5a5a;
+    --border: #d0d0d0;
+    --surface: #ffffff;
+    --bg: #f5f7fa;
+    --error: #E24B4A;
+    --radius: 10px;
+    --shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
 
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--primary);
+    color: #fff;
+    padding: 2.5rem 1.5rem 2rem;
+    text-align: center;
+  }
+  header .inst {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-bottom: 0.5rem;
+  }
+  header h1 {
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    font-weight: 600;
+    max-width: 680px;
+    margin: 0 auto 0.75rem;
+    line-height: 1.35;
+  }
+  header p {
+    font-size: 13px;
+    opacity: 0.75;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  /* PROGRESS */
+  .progress-wrap {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .progress-bar-bg {
+    flex: 1;
+    height: 6px;
+    background: #e0e0e0;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 99px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .progress-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  /* LAYOUT */
+  main {
+    max-width: 720px;
+    margin: 2rem auto;
+    padding: 0 1rem 4rem;
+  }
+
+  /* SECTION LABEL */
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--primary-light);
+  }
+
+  /* QUESTION CARD */
+  .question {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+    box-shadow: var(--shadow);
+    transition: border-color 0.2s;
+  }
+  .question:focus-within {
+    border-color: var(--primary-mid);
+  }
+  .question.required-error {
+    border-color: var(--error);
+  }
+
+  .question-header {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+  .q-num {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--primary-light);
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .q-text {
+    font-weight: 500;
+    font-size: 14.5px;
+    line-height: 1.45;
+  }
+  .q-text .required-star {
+    color: var(--error);
+    margin-left: 2px;
+  }
+  .q-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  /* OPTIONS */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .option-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    font-size: 14px;
+  }
+  .option-label:hover {
+    background: var(--primary-light);
+    border-color: var(--primary-mid);
+  }
+  .option-label input[type="radio"],
+  .option-label input[type="checkbox"] {
+    accent-color: var(--primary);
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+  .option-label.selected {
+    background: var(--primary-light);
+    border-color: var(--primary);
+  }
+
+  /* TEXT INPUT dentro de option */
+  .inline-input {
+    border: none;
+    border-bottom: 1px solid var(--border);
+    background: transparent;
+    font-size: 14px;
+    color: var(--text);
+    width: 160px;
+    padding: 2px 4px;
+    outline: none;
+  }
+  .inline-input:focus {
+    border-color: var(--primary);
+  }
+
+  /* ELEGIBILITY */
+  .elegibility-card {
+    background: #fffbe6;
+    border: 1px solid #f0d875;
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .elegibility-card svg { flex-shrink: 0; margin-top: 2px; }
+  .elegibility-card p { font-size: 14px; color: #7a6000; }
+  .age-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .age-input-wrap input[type="number"] {
+    width: 70px;
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 14px;
+  }
+
+  /* BLOCKER */
+  #not-eligible-msg {
+    display: none;
+    background: #FCEBEB;
+    border: 1px solid #F09595;
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    color: #501313;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  /* OPEN QUESTION */
+  .open-question-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+    box-shadow: var(--shadow);
+  }
+  .open-question-card .q-text {
+    font-weight: 500;
+    font-size: 14.5px;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  /* TABS */
+  .answer-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 1rem;
+  }
+  .tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: #fff;
+    font-size: 13px;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: all 0.15s;
+  }
+  .tab-btn.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+  }
+  .tab-btn svg { width: 15px; height: 15px; }
+
+  /* TEXTAREA */
+  textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 120px;
+    color: var(--text);
+    background: #fafafa;
+    transition: border-color 0.2s;
+  }
+  textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: #fff;
+  }
+
+  /* AUDIO */
+  #audio-panel { display: none; }
+  #audio-panel.visible { display: block; }
+
+  .audio-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 1.5rem;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    background: #fafafa;
+  }
+
+  .rec-btn {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 3px solid var(--primary);
+    background: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .rec-btn:hover { background: var(--primary-light); }
+  .rec-btn.recording {
+    border-color: var(--error);
+    animation: pulse-ring 1.2s ease infinite;
+  }
+  @keyframes pulse-ring {
+    0% { box-shadow: 0 0 0 0 rgba(226,75,74,0.35); }
+    70% { box-shadow: 0 0 0 14px rgba(226,75,74,0); }
+    100% { box-shadow: 0 0 0 0 rgba(226,75,74,0); }
+  }
+  .rec-btn .mic-icon { width: 28px; height: 28px; fill: var(--primary); }
+  .rec-btn.recording .mic-icon { fill: var(--error); }
+
+  .rec-status {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-align: center;
+  }
+  .rec-status strong { color: var(--text); }
+
+  .rec-timer {
+    font-size: 22px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    color: var(--error);
+    display: none;
+  }
+  .rec-timer.visible { display: block; }
+
+  #audio-playback-wrap {
+    width: 100%;
+    display: none;
+  }
+  #audio-playback-wrap.visible { display: flex; flex-direction: column; gap: 10px; }
+
+  audio { width: 100%; border-radius: 8px; }
+
+  .transcription-wrap {
+    margin-top: 10px;
+  }
+  .transcription-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+
+  .transcription-loading {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-muted);
+    padding: 10px;
+  }
+  .transcription-loading.visible { display: flex; }
+  .dot-spin {
+    width: 14px; height: 14px;
+    border: 2px solid var(--border);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .transcription-note {
+    background: var(--accent-light);
+    border: 1px solid #9FE1CB;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: #085041;
+    margin-top: 8px;
+  }
+
+  .delete-audio-btn {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 12px;
+    color: var(--text-muted);
+    cursor: pointer;
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .delete-audio-btn:hover { color: var(--error); border-color: var(--error); }
+
+  /* SUBMIT */
+  .submit-wrap {
+    text-align: center;
+    margin-top: 2rem;
+  }
+  .submit-btn {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 14px 40px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .submit-btn:hover { background: #0C447C; }
+  .submit-btn:active { transform: scale(0.98); }
+  .submit-note {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 10px;
+  }
+
+  /* SUCCESS */
+  #success-screen {
+    display: none;
+    text-align: center;
+    padding: 3rem 1.5rem;
+  }
+  #success-screen.visible { display: block; }
+  .success-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+  }
+  #success-screen h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+  }
+  #success-screen p {
+    font-size: 14px;
+    color: var(--text-muted);
+    max-width: 440px;
+    margin: 0 auto;
+  }
+
+  #form-body { display: block; }
+
+  /* ERROR tooltip */
+  .error-msg {
+    font-size: 12px;
+    color: var(--error);
+    margin-top: 6px;
+    display: none;
+  }
+  .required-error .error-msg { display: block; }
+
+  @media (max-width: 520px) {
+    header { padding: 2rem 1rem 1.5rem; }
+    .question { padding: 1.2rem 1rem; }
+  }
+
+
+  /* ── SHARED STANDARD ELEMENTS ── */
+  .site-topbar {
+    background: #fff;
+    border-bottom: 1px solid #e0ddd5;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .site-topbar img { height: 38px; width: auto; }
+  .site-topbar-text { display: flex; flex-direction: column; gap: 1px; }
+  .site-topbar-name { font-size: 13px; font-weight: 700; letter-spacing: 0.03em; }
+  .site-topbar-sub { font-size: 11px; color: #888; }
+  .site-topbar-back { margin-left: auto; font-size: 12px; color: #888; text-decoration: none; display: flex; align-items: center; gap: 4px; }
+  .site-topbar-back:hover { color: #333; }
+
+  .site-topbar-name { color: #185FA5; }
+
+
+  /* INFO BANNER */
+  .info-banner {
+    background: #E6F1FB;
+    border-left: 4px solid #185FA5;
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin-bottom: 1.25rem;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 13px;
+    color: #0d3d6e;
+    line-height: 1.6;
+  }
+  .info-banner svg { flex-shrink: 0; margin-top: 1px; }
+
+</style>
+</head>
+<body>
+
+<div class="site-topbar">
+  <img src="data:image/png;base64,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" alt="PerissinottoPsi">
+  <div class="site-topbar-text">
+    <span class="site-topbar-name">PerissinottoPsi</span>
+    <span class="site-topbar-sub">Observatório de Pesquisas em Psicologia · UNIP-Goiânia</span>
+  </div>
+  <a href="index.html" class="site-topbar-back">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    Todas as pesquisas
+  </a>
+</div>
+<header>
+  <div class="inst">UNIP – Universidade Paulista · Instituto de Ciências Humanas</div>
+  <h1>O acesso desigual à saúde mental: um estudo comparativo entre Goiânia e Aparecida de Goiânia</h1>
+  <p>Pesquisa de campo · Curso de Psicologia · Prof. Dr. Rodrigo Perissinotto · 2026/1</p>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressBar"></div></div>
+  <span class="progress-label" id="progressLabel">0 de 13</span>
+</div>
+
+<main>
+  <div id="form-body">
+
+<div class="info-banner">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#185FA5" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+  <div><strong>Confidencialidade e tempo estimado</strong> — Suas respostas são completamente anônimas e serão utilizadas exclusivamente para fins científicos, conforme a LGPD (Lei nº 13.709/2018). O tempo estimado de participação é de <strong>10 a 15 minutos</strong>.</div>
+</div>
+    <!-- ELEGIBILIDADE -->
+    <div class="elegibility-card">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a08000" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <div>
+        <p><strong>Critério de elegibilidade</strong> — Esta pesquisa é destinada a pessoas com 18 anos ou mais, residentes em Goiânia ou Aparecida de Goiânia.</p>
+        <div class="age-input-wrap">
+          <label for="ageInput" style="font-size:13px;color:#7a6000;">Sua idade:</label>
+          <input type="number" id="ageInput" min="1" max="120" placeholder="ex: 28" oninput="checkEligibility()">
+          <span style="font-size:13px;color:#7a6000;">anos</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="not-eligible-msg">
+      <strong>Participação não permitida.</strong> Esta pesquisa é restrita a participantes com 18 anos ou mais. Agradecemos seu interesse!
+    </div>
+
+    <div id="survey-form" style="display:none;">
+
+    <p class="section-label">Bloco 1 · Perfil sociodemográfico</p>
+
+    <!-- Q1 -->
+    <div class="question" id="q1" data-type="radio">
+      <div class="question-header">
+        <div class="q-num">1</div>
+        <div>
+          <div class="q-text">Cidade onde você reside</div>
+        </div>
+      </div>
+      <div class="options" id="opts-q1">
+        <label class="option-label"><input type="radio" name="q1" value="Goiânia"> Goiânia</label>
+        <label class="option-label"><input type="radio" name="q1" value="Aparecida de Goiânia"> Aparecida de Goiânia</label>
+        <label class="option-label">
+          <input type="radio" name="q1" value="outro"> Outro:&nbsp;
+          <input class="inline-input" type="text" placeholder="Especifique" id="q1-outro">
+        </label>
+      </div>
+      <div style="margin-top:10px;">
+        <label style="font-size:13px;color:var(--text-muted);">Bairro:</label>
+        <input type="text" id="q1-bairro" placeholder="Nome do bairro" style="border:1px solid var(--border);border-radius:6px;padding:6px 10px;font-size:14px;width:100%;margin-top:4px;">
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question" id="q2" data-type="radio">
+      <div class="question-header">
+        <div class="q-num">2</div>
+        <div><div class="q-text">Como você se identifica em relação ao gênero?</div></div>
+      </div>
+      <div class="options" id="opts-q2">
+        <label class="option-label"><input type="radio" name="q2" value="Mulher"> Mulher</label>
+        <label class="option-label"><input type="radio" name="q2" value="Homem"> Homem</label>
+        <label class="option-label"><input type="radio" name="q2" value="Pessoa não binária"> Pessoa não binária</label>
+        <label class="option-label"><input type="radio" name="q2" value="Pessoa trans"> Pessoa trans</label>
+        <label class="option-label"><input type="radio" name="q2" value="outro-gen"> Outro: <input class="inline-input" type="text" placeholder="Especifique"></label>
+        <label class="option-label"><input type="radio" name="q2" value="Prefiro não informar"> Prefiro não informar</label>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question" id="q3" data-type="radio">
+      <div class="question-header">
+        <div class="q-num">3</div>
+        <div><div class="q-text">Como você se identifica em relação à sua orientação sexual?</div></div>
+      </div>
+      <div class="options" id="opts-q3">
+        <label class="option-label"><input type="radio" name="q3" value="Heterossexual"> Heterossexual</label>
+        <label class="option-label"><input type="radio" name="q3" value="Homossexual (gay ou lésbica)"> Homossexual (gay ou lésbica)</label>
+        <label class="option-label"><input type="radio" name="q3" value="Bissexual"> Bissexual</label>
+        <label class="option-label"><input type="radio" name="q3" value="Pansexual"> Pansexual</label>
+        <label class="option-label"><input type="radio" name="q3" value="Assexual"> Assexual</label>
+        <label class="option-label"><input type="radio" name="q3" value="outro-orient"> Outra: <input class="inline-input" type="text" placeholder="Especifique"></label>
+        <label class="option-label"><input type="radio" name="q3" value="Prefiro não informar"> Prefiro não informar</label>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question" id="q4" data-type="radio">
+      <div class="question-header">
+        <div class="q-num">4</div>
+        <div><div class="q-text">Escolaridade (maior nível concluído ou em andamento)</div></div>
+      </div>
+      <div class="options" id="opts-q4">
+        <label class="option-label"><input type="radio" name="q4" value="Não frequentei a escola"> Não frequentei a escola</label>
+        <label class="option-label"><input type="radio" name="q4" value="Ensino fundamental incompleto"> Ensino fundamental incompleto</label>
+        <label class="option-label"><input type="radio" name="q4" value="Ensino fundamental completo"> Ensino fundamental completo</label>
+        <label class="option-label"><input type="radio" name="q4" value="Ensino médio incompleto"> Ensino médio incompleto</label>
+        <label class="option-label"><input type="radio" name="q4" value="Ensino médio completo"> Ensino médio completo</label>
+        <label class="option-label"><input type="radio" name="q4" value="Ensino superior incompleto"> Ensino superior incompleto</label>
+        <label class="option-label"><input type="radio" name="q4" value="Ensino superior completo"> Ensino superior completo</label>
+        <label class="option-label"><input type="radio" name="q4" value="Pós-graduação"> Pós-graduação</label>
+        <label class="option-label"><input type="radio" name="q4" value="Prefiro não informar"> Prefiro não informar</label>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="question" id="q5" data-type="radio">
+      <div class="question-header">
+        <div class="q-num">5</div>
+        <div><div class="q-text">Renda familiar aproximada</div></div>
+      </div>
+      <div class="options" id="opts-q5">
+        <label class="option-label"><input type="radio" name="q5" value="Até 1 salário mínimo"> Até 1 salário mínimo</label>
+        <label class="option-label"><input type="radio" name="q5" value="De 1 a 2 salários mínimos"> De 1 a 2 salários mínimos</label>
+        <label class="option-label"><input type="radio" name="q5" value="De 2 a 5 salários mínimos"> De 2 a 5 salários mínimos</label>
+        <label class="option-label"><input type="radio" name="q5" value="Mais de 5 salários mínimos"> Mais de 5 salários mínimos</label>
+        <label class="option-label"><input type="radio" name="q5" value="Prefiro não informar"> Prefiro não informar</label>
+      </div>
+    </div>
+
+    <p class="section-label" style="margin-top:1.5rem;">Bloco 2 · Acesso à saúde mental</p>
+
+    <!-- Q6 -->
+    <div class="question" id="q6" data-type="radio">
+      <div class="question-header">
+        <div class="q-num">6</div>
+        <div><div class="q-text">Você sabe onde buscar ajuda em saúde mental na sua região?</div></div>
+      </div>
+      <div class="options" id="opts-q6">
+        <label class="option-label"><input type="radio" name="q6" value="Sim"> Sim</label>
+        <label class="option-label"><input type="radio" name="q6" value="Não"> Não</label>
+        <label class="option-label"><input type="radio" name="q6" value="Não tenho certeza"> Não tenho certeza</label>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="question" id="q7" data-type="radio">
+      <div class="question-header">
+        <div class="q-num">7</div>
+        <div><div class="q-text">Você já buscou atendimento em saúde mental?</div></div>
+      </div>
+      <div class="options" id="opts-q7">
+        <label class="option-label"><input type="radio" name="q7" value="Sim, para mim"> Sim, para mim</label>
+        <label class="option-label"><input type="radio" name="q7" value="Sim, para outra pessoa"> Sim, para outra pessoa</label>
+        <label class="option-label"><input type="radio" name="q7" value="Sim, para mim e para outra pessoa"> Sim, para mim e para outra pessoa</label>
+        <label class="option-label"><input type="radio" name="q7" value="Não, nunca precisei"> Não, nunca precisei</label>
+        <label class="option-label"><input type="radio" name="q7" value="Precisei, mas não consegui atendimento"> Precisei, mas não consegui atendimento</label>
+        <label class="option-label"><input type="radio" name="q7" value="Prefiro não informar"> Prefiro não informar</label>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="question" id="q8" data-type="radio">
+      <div class="question-header">
+        <div class="q-num">8</div>
+        <div><div class="q-text">Nos últimos 12 meses, com que frequência você utilizou serviços de saúde mental?</div></div>
+      </div>
+      <div class="options" id="opts-q8">
+        <label class="option-label"><input type="radio" name="q8" value="Não utilizei serviços de saúde mental"> Não utilizei serviços de saúde mental</label>
+        <label class="option-label"><input type="radio" name="q8" value="Utilizei apenas uma vez"> Utilizei apenas uma vez</label>
+        <label class="option-label"><input type="radio" name="q8" value="Utilizei algumas vezes (2–5 atendimentos)"> Utilizei algumas vezes (2–5 atendimentos)</label>
+        <label class="option-label"><input type="radio" name="q8" value="Utilizei regularmente (mais de 5 atendimentos)"> Utilizei regularmente (mais de 5 atendimentos)</label>
+        <label class="option-label"><input type="radio" name="q8" value="Prefiro não informar"> Prefiro não informar</label>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="question" id="q9" data-type="radio">
+      <div class="question-header">
+        <div class="q-num">9</div>
+        <div><div class="q-text">Caso tenha buscado atendimento, o acompanhamento foi:</div></div>
+      </div>
+      <div class="options" id="opts-q9">
+        <label class="option-label"><input type="radio" name="q9" value="Pontual (uma ou poucas vezes)"> Pontual (uma ou poucas vezes)</label>
+        <label class="option-label"><input type="radio" name="q9" value="Prolongado (acompanhamento por um período maior)"> Prolongado (acompanhamento por um período maior)</label>
+        <label class="option-label"><input type="radio" name="q9" value="Ainda estou em acompanhamento"> Ainda estou em acompanhamento</label>
+        <label class="option-label"><input type="radio" name="q9" value="Não se aplica"> Não se aplica</label>
+      </div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="question" id="q10" data-required="false" data-type="checkbox">
+      <div class="question-header">
+        <div class="q-num">10</div>
+        <div>
+          <div class="q-text">Com quais profissionais você já realizou atendimento em saúde mental?</div>
+          <div class="q-hint">Pode marcar mais de uma opção</div>
+        </div>
+      </div>
+      <div class="options" id="opts-q10">
+        <label class="option-label"><input type="checkbox" name="q10" value="Psicólogo(a)"> Psicólogo(a)</label>
+        <label class="option-label"><input type="checkbox" name="q10" value="Psiquiatra"> Psiquiatra</label>
+        <label class="option-label"><input type="checkbox" name="q10" value="Neurologista"> Neurologista</label>
+        <label class="option-label"><input type="checkbox" name="q10" value="outro-prof"> Outro profissional: <input class="inline-input" type="text" placeholder="Especifique"></label>
+        <label class="option-label"><input type="checkbox" name="q10" value="Nunca realizei atendimento"> Nunca realizei atendimento</label>
+        <label class="option-label"><input type="checkbox" name="q10" value="Prefiro não informar"> Prefiro não informar</label>
+      </div>
+    </div>
+
+    <!-- Q11 -->
+    <div class="question" id="q11" data-required="false" data-type="checkbox">
+      <div class="question-header">
+        <div class="q-num">11</div>
+        <div>
+          <div class="q-text">Você já enfrentou alguma dificuldade para acessar atendimento em saúde mental?</div>
+          <div class="q-hint">Pode marcar mais de uma opção</div>
+        </div>
+      </div>
+      <div class="options" id="opts-q11">
+        <label class="option-label"><input type="checkbox" name="q11" value="Distância até o serviço"> Distância até o serviço</label>
+        <label class="option-label"><input type="checkbox" name="q11" value="Falta de vagas ou demora no atendimento"> Falta de vagas ou demora no atendimento</label>
+        <label class="option-label"><input type="checkbox" name="q11" value="Custo do atendimento"> Custo do atendimento</label>
+        <label class="option-label"><input type="checkbox" name="q11" value="Dificuldade de transporte"> Dificuldade de transporte</label>
+        <label class="option-label"><input type="checkbox" name="q11" value="Não saber onde procurar ajuda"> Não saber onde procurar ajuda</label>
+        <label class="option-label"><input type="checkbox" name="q11" value="Estigma ou vergonha"> Estigma ou vergonha</label>
+        <label class="option-label"><input type="checkbox" name="q11" value="Nunca tive dificuldade"> Nunca tive dificuldade</label>
+        <label class="option-label"><input type="checkbox" name="q11" value="Prefiro não informar"> Prefiro não informar</label>
+      </div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="question" id="q12" data-type="radio">
+      <div class="question-header">
+        <div class="q-num">12</div>
+        <div><div class="q-text">Como você avalia o acesso aos serviços de saúde mental em sua cidade?</div></div>
+      </div>
+      <div class="options" id="opts-q12">
+        <label class="option-label"><input type="radio" name="q12" value="Muito fácil"> Muito fácil</label>
+        <label class="option-label"><input type="radio" name="q12" value="Fácil"> Fácil</label>
+        <label class="option-label"><input type="radio" name="q12" value="Difícil"> Difícil</label>
+        <label class="option-label"><input type="radio" name="q12" value="Muito difícil"> Muito difícil</label>
+        <label class="option-label"><input type="radio" name="q12" value="Não sei avaliar"> Não sei avaliar</label>
+      </div>
+    </div>
+
+    <!-- Q13 ABERTA -->
+    <p class="section-label" style="margin-top:1.5rem;">Questão aberta</p>
+
+    <div class="open-question-card" id="q13">
+      <div class="question-header" style="margin-bottom:0.8rem;">
+        <div class="q-num">13</div>
+        <div><div class="q-text">Em sua opinião, o que poderia melhorar o acesso ou o cuidado em saúde mental em sua cidade?</div></div>
+      </div>
+
+      <div class="answer-tabs">
+        <button class="tab-btn active" id="tab-text" onclick="switchTab('text')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg>
+          Responder por escrito
+        </button>
+        <button class="tab-btn" id="tab-audio" onclick="switchTab('audio')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          Gravar áudio
+        </button>
+      </div>
+
+      <!-- TEXT PANEL -->
+      <div id="text-panel">
+        <textarea id="q13-text" rows="6" placeholder="Escreva aqui sua opinião, sugestões ou experiências sobre o acesso à saúde mental na sua cidade..."></textarea>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:4px;text-align:right;" id="charCount">0 caracteres</div>
+      </div>
+
+      <!-- AUDIO PANEL -->
+      <div id="audio-panel">
+        <div class="audio-controls">
+          <button class="rec-btn" id="recBtn" onclick="toggleRecording()" title="Iniciar / Parar gravação">
+            <svg class="mic-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2" stroke="currentColor" stroke-width="0" fill="currentColor" opacity="0"/>
+            </svg>
+          </button>
+          <div class="rec-timer" id="recTimer">0:00</div>
+          <div class="rec-status" id="recStatus">
+            <strong>Clique no microfone</strong> para iniciar a gravação.<br>
+            <span style="font-size:11px;">O navegador solicitará permissão de acesso ao microfone.</span>
+          </div>
+        </div>
+
+        <div id="audio-playback-wrap">
+          <audio id="audioPlayer" controls></audio>
+          <button class="delete-audio-btn" onclick="deleteAudio()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+            Apagar gravação e recomeçar
+          </button>
+
+          <div class="transcription-wrap">
+            <div class="transcription-label">Transcrição automática</div>
+            <div class="transcription-loading" id="transcriptionLoading">
+              <div class="dot-spin"></div> Transcrevendo áudio...
+            </div>
+            <textarea id="q13-transcription" rows="4" placeholder="A transcrição aparecerá aqui após a gravação. Você pode editar o texto se necessário."></textarea>
+            <div class="transcription-note">
+              ✓ Você pode corrigir o texto transcrito antes de enviar. A transcrição é feita localmente pelo navegador (Web Speech API) quando disponível.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="submit-wrap">
+      <button class="submit-btn" onclick="submitForm()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        Enviar respostas
+      </button>
+      <p class="submit-note">Suas respostas são anônimas e utilizadas exclusivamente para fins científicos.</p>
+    </div>
+
+    </div><!-- /survey-form -->
+  </div><!-- /form-body -->
+
+  <!-- SUCCESS -->
+  <div id="success-screen">
+    <div class="success-icon">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1D9E75" stroke-width="2.5">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+    </div>
+    <h2>Obrigada pela sua participação!</h2>
+    <p>Suas respostas foram registradas com sucesso. Elas contribuirão para a compreensão das desigualdades no acesso à saúde mental em nossa região.</p>
+    <p style="margin-top:1rem;font-size:13px;color:var(--text-muted);">Pesquisa realizada por alunas do curso de Psicologia – UNIP Campus Goiânia Flamboyant, sob orientação do Prof. Dr. Rodrigo Perissinotto.</p>
+  </div>
+
+</main>
+
+<script>
+// ──────────────────────────────────────────
+// ELIGIBILITY
+// ──────────────────────────────────────────
+function checkEligibility() {
+  const age = parseInt(document.getElementById('ageInput').value);
+  const form = document.getElementById('survey-form');
+  const blocker = document.getElementById('not-eligible-msg');
+  if (isNaN(age) || age < 1) { form.style.display='none'; blocker.style.display='none'; return; }
+  if (age < 18) { form.style.display='none'; blocker.style.display='block'; }
+  else { form.style.display='block'; blocker.style.display='none'; }
+}
+
+// ──────────────────────────────────────────
+// PROGRESS BAR
+// ──────────────────────────────────────────
+const TOTAL_Q = 13;
+function updateProgress() {
+  let answered = 0;
+  for (let i = 1; i <= 12; i++) {
+    const q = document.getElementById('q'+i);
+    if (!q) continue;
+    const type = q.dataset.type;
+    if (type === 'radio') {
+      if (document.querySelector(`input[name="q${i}"]:checked`)) answered++;
+    } else if (type === 'checkbox') {
+      if (document.querySelector(`input[name="q${i}"]:checked`)) answered++;
+    }
+  }
+  const t13 = document.getElementById('q13-text').value.trim() || document.getElementById('q13-transcription').value.trim();
+  if (t13) answered++;
+  const pct = Math.round((answered / TOTAL_Q) * 100);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = answered + ' de ' + TOTAL_Q;
+}
+
+document.addEventListener('change', updateProgress);
+document.getElementById('q13-text').addEventListener('input', () => {
+  const len = document.getElementById('q13-text').value.length;
+  document.getElementById('charCount').textContent = len + ' caracteres';
+  updateProgress();
+});
+
+// Option highlight
+document.querySelectorAll('.option-label input[type="radio"]').forEach(inp => {
+  inp.addEventListener('change', function() {
+    const name = this.name;
+    document.querySelectorAll(`input[name="${name}"]`).forEach(r => r.closest('.option-label').classList.remove('selected'));
+    this.closest('.option-label').classList.add('selected');
+  });
+});
+document.querySelectorAll('.option-label input[type="checkbox"]').forEach(inp => {
+  inp.addEventListener('change', function() {
+    this.closest('.option-label').classList.toggle('selected', this.checked);
+  });
+});
+
+// ──────────────────────────────────────────
+// TAB SWITCH (Q13)
+// ──────────────────────────────────────────
+function switchTab(tab) {
+  document.getElementById('tab-text').classList.toggle('active', tab==='text');
+  document.getElementById('tab-audio').classList.toggle('active', tab==='audio');
+  document.getElementById('text-panel').style.display = tab==='text' ? 'block' : 'none';
+  const ap = document.getElementById('audio-panel');
+  ap.style.display = tab==='audio' ? 'block' : 'none';
+  if (tab==='audio') ap.classList.add('visible');
+  else ap.classList.remove('visible');
+}
+
+// ──────────────────────────────────────────
+// AUDIO RECORDING + TRANSCRIPTION
+// ──────────────────────────────────────────
+let mediaRecorder = null;
+let audioChunks = [];
+let timerInterval = null;
+let recSeconds = 0;
+let audioBlob = null;
+let recognition = null;
+let liveTranscript = '';
+
+function toggleRecording() {
+  if (mediaRecorder && mediaRecorder.state === 'recording') {
+    stopRecording();
+  } else {
+    startRecording();
+  }
+}
+
+async function startRecording() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    audioChunks = [];
+    liveTranscript = '';
+    mediaRecorder = new MediaRecorder(stream);
+    mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+    mediaRecorder.onstop = onRecordingStop;
+    mediaRecorder.start();
+
+    const btn = document.getElementById('recBtn');
+    btn.classList.add('recording');
+    document.getElementById('recStatus').innerHTML = '<strong style="color:var(--error)">Gravando...</strong> Clique novamente para parar.';
+    document.getElementById('recTimer').classList.add('visible');
+    recSeconds = 0;
+    timerInterval = setInterval(() => {
+      recSeconds++;
+      const m = Math.floor(recSeconds/60);
+      const s = String(recSeconds%60).padStart(2,'0');
+      document.getElementById('recTimer').textContent = m+':'+s;
+    }, 1000);
+
+    // Web Speech API live transcript
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      recognition = new SpeechRecognition();
+      recognition.lang = 'pt-BR';
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.onresult = (event) => {
+        let interim = '';
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          if (event.results[i].isFinal) liveTranscript += event.results[i][0].transcript + ' ';
+          else interim = event.results[i][0].transcript;
+        }
+        document.getElementById('q13-transcription').value = liveTranscript + interim;
+      };
+      recognition.start();
+    }
+  } catch(err) {
+    alert('Não foi possível acessar o microfone. Verifique as permissões do navegador ou use a opção de resposta por escrito.');
+  }
+}
+
+function stopRecording() {
+  if (mediaRecorder) {
+    mediaRecorder.stop();
+    mediaRecorder.stream.getTracks().forEach(t => t.stop());
+  }
+  if (recognition) { try { recognition.stop(); } catch(e){} }
+  clearInterval(timerInterval);
+  document.getElementById('recBtn').classList.remove('recording');
+  document.getElementById('recTimer').classList.remove('visible');
+  document.getElementById('recStatus').innerHTML = '<strong>Gravação concluída.</strong> Ouça o áudio abaixo.';
+}
+
+async function transcribeWithWhisper(blob) {
+  const loading = document.getElementById('transcriptionLoading');
+  const textarea = document.getElementById('q13-transcription');
+  loading.classList.add('visible');
+  textarea.placeholder = 'Transcrevendo com IA...';
+  try {
+    const formData = new FormData();
+    formData.append('file', new File([blob], 'audio.webm', { type: 'audio/webm' }));
+    formData.append('model', 'whisper-1');
+    formData.append('language', 'pt');
+    const res = await fetch('https://whisper-proxy.perissinotto-prof.workers.dev', {
+      method: 'POST',
+      body: formData
+    });
+    const data = await res.json();
+    loading.classList.remove('visible');
+    if (data.text) {
+      textarea.value = data.text;
+      textarea.placeholder = '';
+    } else {
+      textarea.placeholder = 'Não foi possível transcrever. Edite o texto manualmente.';
+    }
+  } catch(err) {
+    loading.classList.remove('visible');
+    textarea.placeholder = 'Erro na transcrição. Edite o texto manualmente.';
+  }
+  updateProgress();
+}
+
+function onRecordingStop() {
+  audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+  const url = URL.createObjectURL(audioBlob);
+  const player = document.getElementById('audioPlayer');
+  player.src = url;
+  document.getElementById('audio-playback-wrap').classList.add('visible');
+  transcribeWithWhisper(audioBlob);
+  updateProgress();
+}
+
+function deleteAudio() {
+  audioBlob = null;
+  liveTranscript = '';
+  document.getElementById('audioPlayer').src = '';
+  document.getElementById('audio-playback-wrap').classList.remove('visible');
+  document.getElementById('q13-transcription').value = '';
+  document.getElementById('recStatus').innerHTML = '<strong>Clique no microfone</strong> para iniciar a gravação.<br><span style="font-size:11px;">O navegador solicitará permissão de acesso ao microfone.</span>';
+  document.getElementById('recTimer').textContent = '0:00';
+  updateProgress();
+}
+
+// ──────────────────────────────────────────
+// SUBMIT
+// ──────────────────────────────────────────
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbyJZ93ZYtadtl9F7h91DvmRxCODaRjCmFaPcDNsc91Liqi7a4DVOCIYHHRSn5aNTvB5/exec';
+
+function submitForm() {
+  // Apenas a idade é obrigatória
+  const age = parseInt(document.getElementById('ageInput').value);
+  if (!age || age < 18) {
+    document.getElementById('ageInput').focus();
+    document.querySelector('.elegibility-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  // Collect data
+  const data = {};
+  data.age = document.getElementById('ageInput').value;
+  for (let i = 1; i <= 12; i++) {
+    const checked = document.querySelectorAll(`input[name="q${i}"]:checked`);
+    data['q'+i] = Array.from(checked).map(c => c.value).join('; ');
+  }
+  data.q1_bairro = document.getElementById('q1-bairro').value.trim();
+  const textAnswer = document.getElementById('q13-text').value.trim();
+  const audioAnswer = document.getElementById('q13-transcription').value.trim();
+  data.q13 = textAnswer || audioAnswer || '';
+  data.q13_tipo = textAnswer ? 'texto' : (audioAnswer ? 'audio_transcrito' : '');
+
+  // Disable button and show loading state
+  const btn = document.querySelector('.submit-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:spin 0.8s linear infinite"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Enviando...';
+  btn.style.opacity = '0.75';
+
+  // Send to Google Sheets via Apps Script
+  fetch(SHEET_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
+  .then(() => {
+    document.getElementById('form-body').style.display = 'none';
+    document.getElementById('success-screen').classList.add('visible');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.getElementById('progressBar').style.width = '100%';
+    document.getElementById('progressLabel').textContent = '13 de 13';
+  })
+  .catch(() => {
+    btn.disabled = false;
+    btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Enviar respostas';
+    btn.style.opacity = '1';
+    alert('Não foi possível enviar. Verifique sua conexão e tente novamente.');
+  });
+}
+
+// spin keyframe for loading icon
+const styleEl = document.createElement('style');
+styleEl.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
+document.head.appendChild(styleEl);
+</script>
+</body>
+</html>
