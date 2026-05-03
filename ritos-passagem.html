@@ -502,6 +502,28 @@ audio { width:100%; border-radius:8px; }
 </main>
 
 <script>
+
+// Detect best audio format for this device
+function getSupportedMimeType() {
+  const types = [
+    'audio/webm;codecs=opus',
+    'audio/webm',
+    'audio/ogg;codecs=opus',
+    'audio/ogg',
+    'audio/mp4',
+  ];
+  for (const type of types) {
+    if (MediaRecorder.isTypeSupported(type)) return type;
+  }
+  return '';
+}
+
+function getFileExtension(mimeType) {
+  if (mimeType.includes('ogg')) return 'ogg';
+  if (mimeType.includes('mp4')) return 'mp4';
+  return 'webm';
+}
+
 const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwibVG7L4eviZd54PXVVDR1EtBVqJuZiG1MPdv1CUgcy9xpTiJ5pulHYTu1xDBnDeGi/exec';
 const OPEN_IDS = ['q11','q12','q13','q14d','q15','q17d','q18','q19','q20'];
 const rec = {}; // audio state per question
@@ -558,7 +580,9 @@ async function startRec(id) {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     const s = rec[id];
     s.chunks = []; s.live = '';
-    s.mr = new MediaRecorder(stream);
+    const mimeType = getSupportedMimeType();
+    s.mr = new MediaRecorder(stream, mimeType ? { mimeType } : {});
+    s.mr._mimeType = mimeType;
     s.mr.ondataavailable = e => s.chunks.push(e.data);
     s.mr.onstop = () => onStop(id);
     s.mr.start();
@@ -599,14 +623,16 @@ function stopRec(id) {
   document.getElementById('rs-' + id).innerHTML = '<strong>Gravação concluída.</strong>';
 }
 
-async function transcribeWhisper(id, blob) {
+async function transcribeWhisper(id, blob, mimeType) {
+  mimeType = mimeType || 'audio/webm';
+  const ext = getFileExtension(mimeType);
   const ld = document.getElementById('tl-' + id);
   const ta = document.getElementById('tr-' + id);
   ld.classList.add('on');
   ta.placeholder = 'Transcrevendo com IA...';
   try {
     const formData = new FormData();
-    formData.append('file', new File([blob], 'audio.webm', { type: 'audio/webm' }));
+    formData.append('file', new File([blob], 'audio.' + ext, { type: mimeType }));
     formData.append('model', 'whisper-1');
     formData.append('language', 'pt');
     const res = await fetch('https://whisper-proxy.perissinotto-prof.workers.dev', {
@@ -630,10 +656,12 @@ async function transcribeWhisper(id, blob) {
 
 function onStop(id) {
   const s = rec[id];
-  s.blob = new Blob(s.chunks, { type: 'audio/webm' });
+  const mimeType = s.mr ? (s.mr._mimeType || 'audio/webm') : 'audio/webm';
+  s.blob = new Blob(s.chunks, { type: mimeType });
+  s._mimeType = mimeType;
   document.getElementById('pl-' + id).src = URL.createObjectURL(s.blob);
   document.getElementById('pw-' + id).classList.add('on');
-  transcribeWhisper(id, s.blob);
+  transcribeWhisper(id, s.blob, s._mimeType);
   prog();
 }
 
