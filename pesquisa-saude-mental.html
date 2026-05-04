@@ -1084,6 +1084,10 @@ async function transcribeWithWhisper(blob, mimeType) {
   textarea.placeholder = 'Transcrevendo com IA...';
 
   try {
+    console.log("Enviando para Whisper...");
+    console.log("MIME:", mimeType);
+    console.log("Blob size:", blob.size);
+
     const formData = new FormData();
     formData.append('file', new File([blob], 'audio.' + ext, { type: mimeType }));
     formData.append('model', 'whisper-1');
@@ -1094,7 +1098,17 @@ async function transcribeWithWhisper(blob, mimeType) {
       body: formData
     });
 
-    const data = await res.json();
+    console.log("HTTP status:", res.status);
+
+    const raw = await res.text();
+    console.log("Resposta bruta Whisper:", raw);
+
+    let data = {};
+    try {
+      data = JSON.parse(raw);
+    } catch(e) {
+      throw new Error("Servidor não retornou JSON válido");
+    }
 
     loading.classList.remove('visible');
 
@@ -1102,13 +1116,15 @@ async function transcribeWithWhisper(blob, mimeType) {
       textarea.value = data.text.trim();
       textarea.placeholder = '';
     } else {
-      textarea.placeholder = 'Não foi possível transcrever. Você pode digitar manualmente.';
+      textarea.placeholder = 'Whisper respondeu sem texto.';
+      alert("Whisper respondeu sem texto: " + raw);
     }
 
   } catch(err) {
-    console.error("Erro Whisper:", err);
+    console.error("Erro Whisper detalhado:", err);
     loading.classList.remove('visible');
-    textarea.placeholder = 'Erro na transcrição. Você pode digitar manualmente.';
+    textarea.placeholder = 'Erro na transcrição.';
+    alert("Erro de transcrição: " + err.message);
   }
 
   updateProgress();
