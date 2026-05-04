@@ -858,7 +858,7 @@
             </div>
             <textarea id="q13-transcription" rows="4" placeholder="A transcrição aparecerá aqui após a gravação. Você pode editar o texto se necessário."></textarea>
             <div class="transcription-note">
-              ✓ O áudio será enviado para transcrição automática por IA após a gravação. Você pode corrigir o texto antes de enviar..
+              ✓ Você pode corrigir o texto transcrito antes de enviar. A transcrição é feita localmente pelo navegador (Web Speech API) quando disponível.
             </div>
           </div>
         </div>
@@ -964,13 +964,15 @@ function switchTab(tab) {
 }
 
 // ──────────────────────────────────────────
-// AUDIO RECORDING + TRANSCRIPTION (MOBILE SAFE)
+// AUDIO RECORDING + TRANSCRIPTION
 // ──────────────────────────────────────────
 let mediaRecorder = null;
 let audioChunks = [];
 let timerInterval = null;
 let recSeconds = 0;
 let audioBlob = null;
+let recognition = null;
+let liveTranscript = '';
 
 function toggleRecording() {
   if (mediaRecorder && mediaRecorder.state === 'recording') {
@@ -980,185 +982,114 @@ function toggleRecording() {
   }
 }
 
-function getSupportedMimeType() {
-  const possibleTypes = [
-    'audio/mp4',
-    'audio/webm;codecs=opus',
-    'audio/webm',
-    'audio/ogg'
-  ];
-
-  for (let type of possibleTypes) {
-    if (MediaRecorder.isTypeSupported(type)) return type;
-  }
-  return '';
-}
-
-function getFileExtension(mimeType) {
-  if (!mimeType) return 'webm';
-  if (mimeType.includes('mp4')) return 'mp4';
-  if (mimeType.includes('ogg')) return 'ogg';
-  return 'webm';
-}
-
 async function startRecording() {
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({
-      audio: {
-        echoCancellation: true,
-        noiseSuppression: true,
-        autoGainControl: true
-      }
-    });
-
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     audioChunks = [];
-
+    liveTranscript = '';
     const mimeType = getSupportedMimeType();
-
     mediaRecorder = new MediaRecorder(stream, mimeType ? { mimeType } : {});
     mediaRecorder._mimeType = mimeType;
-
-    mediaRecorder.ondataavailable = e => {
-      if (e.data.size > 0) audioChunks.push(e.data);
-    };
-
+    mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
     mediaRecorder.onstop = onRecordingStop;
+    mediaRecorder.start();
 
-    mediaRecorder.start(250);
-
-    document.getElementById('recBtn').classList.add('recording');
-    document.getElementById('recStatus').innerHTML =
-      '<strong style="color:var(--error)">Gravando...</strong> Clique novamente para parar.';
+    const btn = document.getElementById('recBtn');
+    btn.classList.add('recording');
+    document.getElementById('recStatus').innerHTML = '<strong style="color:var(--error)">Gravando...</strong> Clique novamente para parar.';
     document.getElementById('recTimer').classList.add('visible');
-
     recSeconds = 0;
     timerInterval = setInterval(() => {
       recSeconds++;
-      const m = Math.floor(recSeconds / 60);
-      const s = String(recSeconds % 60).padStart(2,'0');
-      document.getElementById('recTimer').textContent = m + ':' + s;
+      const m = Math.floor(recSeconds/60);
+      const s = String(recSeconds%60).padStart(2,'0');
+      document.getElementById('recTimer').textContent = m+':'+s;
     }, 1000);
 
-  } catch(err) {
-    console.error("Erro de microfone:", err);
-
-    let msg = 'Não foi possível acessar o microfone.';
-
-    if (err.name === 'NotAllowedError') {
-      msg = 'Permissão do microfone negada. Autorize o microfone no navegador.';
-    } else if (err.name === 'NotReadableError') {
-      msg = 'O microfone está sendo usado por outro aplicativo.';
-    } else if (err.name === 'NotSupportedError') {
-      msg = 'Seu navegador não suporta esta gravação.';
+    // Web Speech API live transcript
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      recognition = new SpeechRecognition();
+      recognition.lang = 'pt-BR';
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.onresult = (event) => {
+        let interim = '';
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          if (event.results[i].isFinal) liveTranscript += event.results[i][0].transcript + ' ';
+          else interim = event.results[i][0].transcript;
+        }
+        document.getElementById('q13-transcription').value = liveTranscript + interim;
+      };
+      recognition.start();
     }
-
-    alert(msg);
+  } catch(err) {
+    alert('Não foi possível acessar o microfone. Verifique as permissões do navegador ou use a opção de resposta por escrito.');
   }
 }
 
 function stopRecording() {
-  if (!mediaRecorder) return;
-
-  mediaRecorder.stop();
-
-  if (mediaRecorder.stream) {
-    mediaRecorder.stream.getTracks().forEach(track => track.stop());
+  if (mediaRecorder) {
+    mediaRecorder.stop();
+    mediaRecorder.stream.getTracks().forEach(t => t.stop());
   }
-
+  if (recognition) { try { recognition.stop(); } catch(e){} }
   clearInterval(timerInterval);
-
   document.getElementById('recBtn').classList.remove('recording');
   document.getElementById('recTimer').classList.remove('visible');
-  document.getElementById('recStatus').innerHTML =
-    '<strong>Gravação concluída.</strong> Aguarde a transcrição automática...';
+  document.getElementById('recStatus').innerHTML = '<strong>Gravação concluída.</strong> Ouça o áudio abaixo.';
 }
 
 async function transcribeWithWhisper(blob, mimeType) {
   mimeType = mimeType || 'audio/webm';
-
   const ext = getFileExtension(mimeType);
   const loading = document.getElementById('transcriptionLoading');
   const textarea = document.getElementById('q13-transcription');
-
   loading.classList.add('visible');
   textarea.placeholder = 'Transcrevendo com IA...';
-
   try {
-    console.log("Enviando para Whisper...");
-    console.log("MIME:", mimeType);
-    console.log("Blob size:", blob.size);
-
     const formData = new FormData();
     formData.append('file', new File([blob], 'audio.' + ext, { type: mimeType }));
     formData.append('model', 'whisper-1');
     formData.append('language', 'pt');
-
     const res = await fetch('https://whisper-proxy.perissinotto-prof.workers.dev', {
       method: 'POST',
       body: formData
     });
-
-    console.log("HTTP status:", res.status);
-
-    const raw = await res.text();
-    console.log("Resposta bruta Whisper:", raw);
-
-    let data = {};
-    try {
-      data = JSON.parse(raw);
-    } catch(e) {
-      throw new Error("Servidor não retornou JSON válido");
-    }
-
+    const data = await res.json();
     loading.classList.remove('visible');
-
-    if (data.text && data.text.trim() !== '') {
-      textarea.value = data.text.trim();
+    if (data.text) {
+      textarea.value = data.text;
       textarea.placeholder = '';
     } else {
-      textarea.placeholder = 'Whisper respondeu sem texto.';
-      alert("Whisper respondeu sem texto: " + raw);
+      textarea.placeholder = 'Não foi possível transcrever. Edite o texto manualmente.';
     }
-
   } catch(err) {
-    console.error("Erro Whisper detalhado:", err);
     loading.classList.remove('visible');
-    textarea.placeholder = 'Erro na transcrição.';
-    alert("Erro de transcrição: " + err.message);
+    textarea.placeholder = 'Erro na transcrição. Edite o texto manualmente.';
   }
-
   updateProgress();
 }
 
 function onRecordingStop() {
   const mimeType = mediaRecorder._mimeType || 'audio/webm';
-
   audioBlob = new Blob(audioChunks, { type: mimeType });
-
   const url = URL.createObjectURL(audioBlob);
   const player = document.getElementById('audioPlayer');
   player.src = url;
-
   document.getElementById('audio-playback-wrap').classList.add('visible');
-
   transcribeWithWhisper(audioBlob, mimeType);
-
   updateProgress();
 }
 
 function deleteAudio() {
   audioBlob = null;
-  audioChunks = [];
-
+  liveTranscript = '';
   document.getElementById('audioPlayer').src = '';
   document.getElementById('audio-playback-wrap').classList.remove('visible');
   document.getElementById('q13-transcription').value = '';
-
-  document.getElementById('recStatus').innerHTML =
-    '<strong>Clique no microfone</strong> para iniciar a gravação.<br><span style="font-size:11px;">O navegador solicitará permissão de acesso ao microfone.</span>';
-
+  document.getElementById('recStatus').innerHTML = '<strong>Clique no microfone</strong> para iniciar a gravação.<br><span style="font-size:11px;">O navegador solicitará permissão de acesso ao microfone.</span>';
   document.getElementById('recTimer').textContent = '0:00';
-
   updateProgress();
 }
 
