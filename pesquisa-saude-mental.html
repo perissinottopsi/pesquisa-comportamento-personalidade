@@ -963,190 +963,26 @@ function switchTab(tab) {
   else ap.classList.remove('visible');
 }
 
-// ──────────────────────────────────────────
-// AUDIO RECORDING + TRANSCRIPTION (MOBILE SAFE)
-// ──────────────────────────────────────────
-let mediaRecorder = null;
-let audioChunks = [];
-let timerInterval = null;
-let recSeconds = 0;
-let audioBlob = null;
+<audio id="audioPlayer" controls></audio>
 
-function toggleRecording() {
-  if (mediaRecorder && mediaRecorder.state === 'recording') {
-    stopRecording();
-  } else {
-    startRecording();
-  }
-}
+<button class="delete-audio-btn" onclick="deleteAudio()">
+  Apagar gravação e recomeçar
+</button>
 
-function getSupportedMimeType() {
-  const possibleTypes = [
-    'audio/mp4',
-    'audio/webm;codecs=opus',
-    'audio/webm',
-    'audio/ogg'
-  ];
+<button class="delete-audio-btn" onclick="retryTranscription()">
+  Tentar transcrever novamente
+</button>
 
-  for (let type of possibleTypes) {
-    if (MediaRecorder.isTypeSupported(type)) return type;
-  }
-  return '';
-}
-
-function getFileExtension(mimeType) {
-  if (!mimeType) return 'mp4';
-  if (mimeType.includes('mp4')) return 'mp4';
-  if (mimeType.includes('ogg')) return 'ogg';
-  return 'webm';
-}
-
-async function startRecording() {
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({
-      audio: {
-        echoCancellation: true,
-        noiseSuppression: true,
-        autoGainControl: true
-      }
-    });
-
-    audioChunks = [];
-    const mimeType = getSupportedMimeType();
-
-    mediaRecorder = new MediaRecorder(stream, mimeType ? { mimeType } : {});
-    mediaRecorder._mimeType = mimeType;
-
-    mediaRecorder.ondataavailable = e => {
-      if (e.data.size > 0) audioChunks.push(e.data);
-    };
-
-    mediaRecorder.onstop = onRecordingStop;
-    mediaRecorder.start(250);
-
-    document.getElementById('recBtn').classList.add('recording');
-    document.getElementById('recStatus').innerHTML =
-      '<strong style="color:var(--error)">Gravando...</strong> Clique novamente para parar.';
-    document.getElementById('recTimer').classList.add('visible');
-
-    recSeconds = 0;
-    timerInterval = setInterval(() => {
-      recSeconds++;
-      const m = Math.floor(recSeconds / 60);
-      const s = String(recSeconds % 60).padStart(2,'0');
-      document.getElementById('recTimer').textContent = m + ':' + s;
-    }, 1000);
-
-  } catch(err) {
-    let msg = 'Não foi possível acessar o microfone.';
-
-    if (err.name === 'NotAllowedError') {
-      msg = 'Permissão do microfone negada. Autorize o microfone no navegador.';
-    } else if (err.name === 'NotReadableError') {
-      msg = 'O microfone está sendo usado por outro aplicativo.';
-    } else if (err.name === 'NotSupportedError') {
-      msg = 'Seu navegador não suporta esta gravação.';
-    }
-
-    alert(msg);
-  }
-}
-
-function stopRecording() {
-  if (!mediaRecorder) return;
-
-  mediaRecorder.stop();
-
-  if (mediaRecorder.stream) {
-    mediaRecorder.stream.getTracks().forEach(track => track.stop());
-  }
-
-  clearInterval(timerInterval);
-
-  document.getElementById('recBtn').classList.remove('recording');
-  document.getElementById('recTimer').classList.remove('visible');
-  document.getElementById('recStatus').innerHTML =
-    '<strong>Gravação concluída.</strong> Aguarde a transcrição automática...';
-}
-
-async function transcribeWithWhisper(blob, mimeType) {
-  mimeType = mimeType || 'audio/mp4';
-
-  const ext = getFileExtension(mimeType);
-  const loading = document.getElementById('transcriptionLoading');
-  const textarea = document.getElementById('q13-transcription');
-
-  loading.classList.add('visible');
-  textarea.placeholder = 'Transcrevendo com IA...';
-
-  try {
-    const formData = new FormData();
-    formData.append('file', new File([blob], 'audio.' + ext, { type: mimeType }));
-    formData.append('model', 'whisper-1');
-    formData.append('language', 'pt');
-
-    const res = await fetch('https://whisper-proxy.perissinotto-prof.workers.dev', {
-      method: 'POST',
-      body: formData
-    });
-
-    const raw = await res.text();
-    let data = {};
-
-    try {
-      data = JSON.parse(raw);
-    } catch(e) {
-      throw new Error('Resposta inválida do servidor');
-    }
-
-    loading.classList.remove('visible');
-
-    if (data.text && data.text.trim() !== '') {
-      textarea.value = data.text.trim();
-      textarea.placeholder = '';
-    } else {
-      textarea.placeholder = 'Não foi possível transcrever automaticamente. Você pode digitar manualmente.';
-    }
-
-  } catch(err) {
-    loading.classList.remove('visible');
-    textarea.placeholder = 'Erro na transcrição automática. Você pode digitar manualmente.';
-  }
-
-  updateProgress();
-}
-
-function onRecordingStop() {
-  const mimeType = mediaRecorder._mimeType || 'audio/mp4';
-
-  audioBlob = new Blob(audioChunks, { type: mimeType });
-
-  const url = URL.createObjectURL(audioBlob);
-  const player = document.getElementById('audioPlayer');
-  player.src = url;
-
-  document.getElementById('audio-playback-wrap').classList.add('visible');
-
-  transcribeWithWhisper(audioBlob, mimeType);
-
-  updateProgress();
-}
-
-function deleteAudio() {
-  audioBlob = null;
-  audioChunks = [];
-
-  document.getElementById('audioPlayer').src = '';
-  document.getElementById('audio-playback-wrap').classList.remove('visible');
-  document.getElementById('q13-transcription').value = '';
-
-  document.getElementById('recStatus').innerHTML =
-    '<strong>Clique no microfone</strong> para iniciar a gravação.<br><span style="font-size:11px;">O navegador solicitará permissão de acesso ao microfone.</span>';
-
-  document.getElementById('recTimer').textContent = '0:00';
-
-  updateProgress();
-}
+<div class="transcription-wrap">
+  <div class="transcription-label">Transcrição automática</div>
+  <div class="transcription-loading" id="transcriptionLoading">
+    <div class="dot-spin"></div> Transcrevendo entrevista...
+  </div>
+  <textarea id="q13-transcription" rows="4" placeholder="A transcrição aparecerá aqui após a gravação. Você pode editar o texto se necessário."></textarea>
+  <div class="transcription-note">
+    ✓ O áudio será enviado para transcrição automática por IA após a gravação. Você pode corrigir o texto antes de enviar.
+  </div>
+</div>
 
 // ──────────────────────────────────────────
 // SUBMIT
